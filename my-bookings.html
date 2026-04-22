@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings | Pearl Safari Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="my-bookings.html" class="nav-cta active" id="authCta"><i class="fas fa-user"></i> My Bookings</a>
+    </nav>
+    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Account</span>
+      <h2>My Bookings</h2>
+      <p>Track your reservations and payment status in one place.</p>
+    </div>
+    <div id="bookingsContainer" class="card-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">Loading bookings...</div>
+          <div class="card-desc">Please wait while we fetch your latest reservations.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const API_BASE = 'http://localhost:5000/api';
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 2800);
+}
+
+function toggleNav() {
+  document.getElementById('mainNav').classList.toggle('open');
+}
+
+function setupAuthCta() {
+  const authCta = document.getElementById('authCta');
+  if (!authCta) return;
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    authCta.innerHTML = '<i class="fas fa-user"></i> Login';
+    authCta.href = 'login.html';
+    return;
+  }
+
+  if (document.getElementById('logoutNavLink')) return;
+  const logoutLink = document.createElement('a');
+  logoutLink.id = 'logoutNavLink';
+  logoutLink.href = '#';
+  logoutLink.className = 'nav-cta';
+  logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+  logoutLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('currentBookingId');
+    localStorage.removeItem('currentBookingAmount');
+    localStorage.removeItem('currentPaymentMethod');
+    localStorage.removeItem('currentBookingReference');
+    window.location.href = 'index.html';
+  });
+  document.getElementById('mainNav').appendChild(logoutLink);
+}
+
+function bookingStatusColor(status) {
+  if (status === 'CONFIRMED') return 'var(--forest-light)';
+  if (status === 'PENDING') return '#d39e00';
+  if (status === 'CANCELLED') return '#c0392b';
+  return 'var(--text-soft)';
+}
+
+function paymentStatusText(payments) {
+  if (!payments || !payments.length) return 'No payment yet';
+  return payments[0].status;
+}
+
+function renderBookings(bookings) {
+  const container = document.getElementById('bookingsContainer');
+  if (!container) return;
+
+  if (!bookings.length) {
+    container.innerHTML = `
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">No bookings yet</div>
+          <div class="card-desc">Start by exploring our packages and complete your first reservation.</div>
+          <a href="packages.html" class="btn btn-sm" style="margin-top:1rem;">Browse Packages</a>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = bookings.map((booking) => `
+    <div class="card">
+      <div class="card-body">
+        <div class="card-meta"><i class="fas fa-hashtag"></i> ${booking.bookingReference || booking.reference || booking.id}</div>
+        <div class="card-title">${booking.destination?.name || booking.tourPackage?.title || 'Safari Booking'}</div>
+        <div class="card-desc">
+          Traveler: ${booking.firstName} ${booking.lastName}<br>
+          Total: $${Number(booking.totalAmount).toLocaleString()}<br>
+          Payment: ${paymentStatusText(booking.payments)}
+        </div>
+        <div class="card-footer">
+          <span style="font-weight:700; color:${bookingStatusColor(booking.status)};">${booking.status}</span>
+          <small style="color:var(--text-soft);">Created: ${new Date(booking.createdAt).toLocaleDateString()}</small>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function loadBookings() {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    showToast('Please login first.', 'error');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/bookings/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Could not fetch bookings.');
+    renderBookings(data.bookings || []);
+  } catch (error) {
+    const container = document.getElementById('bookingsContainer');
+    if (container) {
+      container.innerHTML = `
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Could not load bookings</div>
+            <div class="card-desc">${error.message || 'Please try again later.'}</div>
+          </div>
+        </div>
+      `;
+    }
+  }
+}
+
+setupAuthCta();
+loadBookings();
+</script>
+</body>
+</html>

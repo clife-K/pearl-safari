@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Pearl Safari Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta active"><i class="fas fa-user"></i> Login</a>
+    </nav>
+    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="logo" style="justify-content:center; margin-bottom:0.5rem;">
+      <i class="fas fa-paw"></i>
+      <div style="font-size:1.3rem;">Pearl Safari<span style="color:var(--text-soft); font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:300; display:block;">Uganda</span></div>
+    </div>
+    <p class="auth-subtitle">Welcome back — your next adventure awaits</p>
+
+    <div class="tab-buttons">
+      <button class="tab-btn active" id="loginTab" onclick="switchTab('login')">Login</button>
+      <button class="tab-btn" id="signupTab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Panel -->
+    <div id="loginPanel" class="form-panel active">
+      <form onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div style="display:flex; justify-content:flex-end; margin-bottom:1.25rem;">
+          <a href="#" style="font-size:0.85rem; color:var(--text-soft);">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-block btn-lg btn-forest">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+      </form>
+
+      <div style="text-align:center; margin:1.5rem 0; position:relative;">
+        <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:var(--sand);"></div>
+        <span style="position:relative; background:var(--white); padding:0 1rem; font-size:0.85rem; color:var(--text-soft);">or continue with</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+        <button onclick="showToast('Google login is demo-only for now.', 'info'); return false;" style="background:var(--cream); border:1.5px solid var(--sand); border-radius:var(--radius); padding:10px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.9rem; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px;">
+          <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="G"> Google
+        </button>
+        <button onclick="showToast('Facebook login is demo-only for now.', 'info'); return false;" style="background:#1877f2; border:none; border-radius:var(--radius); padding:10px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.9rem; cursor:pointer; color:white; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+      </div>
+    </div>
+
+    <!-- Signup Panel -->
+    <div id="signupPanel" class="form-panel">
+      <form onsubmit="handleSignup(event)">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Full name" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="tel" placeholder="WhatsApp / Phone (+256…)">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Create password (min 6 chars)" required minlength="6">
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-soft); margin-bottom:1.25rem; text-align:center;">By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+        <button type="submit" class="btn btn-block btn-lg btn-forest">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const API_BASE = 'http://localhost:5000/api';
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 2800);
+}
+
+function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
+function switchTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('loginTab').classList.toggle('active', isLogin);
+  document.getElementById('signupTab').classList.toggle('active', !isLogin);
+  document.getElementById('loginPanel').classList.toggle('active', isLogin);
+  document.getElementById('signupPanel').classList.toggle('active', !isLogin);
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const loginInputs = document.querySelectorAll('#loginPanel input');
+  const email = loginInputs[0].value.trim();
+  const password = loginInputs[1].value;
+
+  try {
+    const response = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Login failed.');
+    }
+
+    localStorage.setItem('authToken', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    showToast('Login successful. Redirecting...', 'success');
+    setTimeout(() => { window.location.href = 'booking.html'; }, 500);
+  } catch (error) {
+    showToast(error.message || 'Could not login. Please try again.', 'error');
+  }
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  const signupInputs = document.querySelectorAll('#signupPanel input');
+  const fullName = signupInputs[0].value.trim();
+  const email = signupInputs[1].value.trim();
+  const phone = signupInputs[2].value.trim();
+  const password = signupInputs[3].value;
+
+  try {
+    const response = await fetch(`${API_BASE}/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName, email, phone, password })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Signup failed.');
+    }
+
+    localStorage.setItem('authToken', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    showToast('Account created successfully. Redirecting...', 'success');
+    setTimeout(() => { window.location.href = 'booking.html'; }, 500);
+  } catch (error) {
+    showToast(error.message || 'Could not create account. Please try again.', 'error');
+  }
+}
+</script>
+</body>
+</html>

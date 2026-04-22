@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build/dist
+dist/
+build/
+.next/
+out/
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sql
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary
+tmp/
+temp/
+
+# Docker
+.docker/
+docker-compose.override.yml

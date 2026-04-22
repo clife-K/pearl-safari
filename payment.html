@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Payment | Pearl Safari Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="api-config.js"></script>
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta" id="authCta"><i class="fas fa-user"></i> Login</a>
+    </nav>
+    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="section-sm">
+  <div class="container">
+
+    <!-- Steps -->
+    <div class="steps" style="max-width:500px;">
+      <div class="step-item done">
+        <div class="step-num"><i class="fas fa-check" style="font-size:0.75rem;"></i></div>
+        <div class="step-label">Your Details</div>
+      </div>
+      <div class="step-connector done"></div>
+      <div class="step-item done">
+        <div class="step-num"><i class="fas fa-check" style="font-size:0.75rem;"></i></div>
+        <div class="step-label">Extras</div>
+      </div>
+      <div class="step-connector done"></div>
+      <div class="step-item active">
+        <div class="step-num">3</div>
+        <div class="step-label">Payment</div>
+      </div>
+    </div>
+
+    <div class="attraction-layout">
+      <!-- Payment Form -->
+      <div style="flex:2;">
+        <div class="payment-form-card">
+          <h2 style="margin-bottom:0.4rem; font-size:1.6rem;"><i class="fas fa-lock" style="color:var(--forest-light); font-size:1.2rem;"></i> Secure Payment</h2>
+          <p style="margin-bottom:2rem; color:var(--text-soft);">Your payment is protected by 256-bit SSL encryption.</p>
+
+          <!-- Payment Method Tabs -->
+          <div class="payment-method-tabs">
+            <div class="pm-tab active" onclick="switchPayment('card', this)"><i class="fas fa-credit-card"></i> Card</div>
+            <div class="pm-tab" onclick="switchPayment('mtn', this)"><i class="fas fa-mobile-alt"></i> MTN MoMo</div>
+            <div class="pm-tab" onclick="switchPayment('airtel', this)"><i class="fas fa-mobile-alt"></i> Airtel Money</div>
+          </div>
+
+          <!-- Card Payment -->
+          <div id="cardPanel">
+            <div class="form-section-title"><i class="far fa-credit-card"></i> &nbsp;Card Details</div>
+            <div class="form-field">
+              <label>Card Number</label>
+              <div class="input-group" style="position:relative;">
+                <i class="far fa-credit-card" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-soft);"></i>
+                <input type="text" placeholder="4242 4242 4242 4242" maxlength="19" oninput="formatCard(this)" style="padding-left:40px; width:100%; padding:12px 12px 12px 40px; border:1.5px solid var(--sand); border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:0.95rem; background:var(--cream); outline:none;">
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div class="form-field">
+                <label>Expiry Date</label>
+                <input type="text" placeholder="MM / YY" maxlength="7" class="form-field" style="width:100%; padding:10px 14px; border:1.5px solid var(--sand); border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:0.95rem; background:var(--cream); outline:none;">
+              </div>
+              <div class="form-field">
+                <label>CVV</label>
+                <input type="text" placeholder="123" maxlength="4" class="form-field" style="width:100%; padding:10px 14px; border:1.5px solid var(--sand); border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:0.95rem; background:var(--cream); outline:none;">
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Name on Card</label>
+              <input type="text" placeholder="JOHN MUTESI" style="text-transform:uppercase;" class="form-field" style="width:100%; padding:10px 14px; border:1.5px solid var(--sand); border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:0.95rem; background:var(--cream); outline:none;">
+            </div>
+          </div>
+
+          <!-- MTN Mobile Money -->
+          <div id="mtnPanel" style="display:none;">
+            <div class="form-section-title"><i class="fas fa-mobile-alt"></i> &nbsp;MTN Mobile Money</div>
+            <div style="background:var(--cream); border-radius:var(--radius); padding:1rem; margin-bottom:1rem; border-left:4px solid var(--gold);">
+              <p style="margin:0; font-size:0.9rem; color:var(--text-soft);">Enter your MTN Mobile Money number. You will receive a USSD prompt to approve the payment.</p>
+            </div>
+            <div class="form-field">
+              <label>MTN Phone Number</label>
+              <input type="tel" placeholder="+256 77X XXX XXX" style="width:100%; padding:10px 14px; border:1.5px solid var(--sand); border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:0.95rem; background:var(--cream); outline:none;">
+            </div>
+          </div>
+
+          <!-- Airtel Money -->
+          <div id="airtelPanel" style="display:none;">
+            <div class="form-section-title"><i class="fas fa-mobile-alt"></i> &nbsp;Airtel Money</div>
+            <div style="background:var(--cream); border-radius:var(--radius); padding:1rem; margin-bottom:1rem; border-left:4px solid var(--forest-light);">
+              <p style="margin:0; font-size:0.9rem; color:var(--text-soft);">Enter your Airtel Money number. You will receive a USSD push to approve the payment on your phone.</p>
+            </div>
+            <div class="form-field">
+              <label>Airtel Phone Number</label>
+              <input type="tel" placeholder="+256 75X XXX XXX" style="width:100%; padding:10px 14px; border:1.5px solid var(--sand); border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:0.95rem; background:var(--cream); outline:none;">
+            </div>
+          </div>
+
+          <!-- Terms & Pay -->
+          <label style="display:flex; align-items:flex-start; gap:12px; margin:1.5rem 0; cursor:pointer; font-size:0.9rem; color:var(--text-soft);">
+            <input type="checkbox" id="termsCheck" style="margin-top:3px; accent-color:var(--forest);">
+            I agree to the <a href="#" style="color:var(--forest-light);">Terms & Conditions</a> and <a href="#" style="color:var(--forest-light);">Cancellation Policy</a>
+          </label>
+
+          <button onclick="confirmPayment()" class="btn btn-block btn-lg" style="background:var(--forest); color:white; font-size:1.1rem;">
+            <i class="fas fa-lock"></i> Pay $1,300 — Confirm Booking
+          </button>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+            <span style="font-size:0.8rem; color:var(--text-soft); display:flex; align-items:center; gap:5px;"><i class="fas fa-shield-alt" style="color:var(--forest-light);"></i> SSL Secure</span>
+            <span style="font-size:0.8rem; color:var(--text-soft); display:flex; align-items:center; gap:5px;"><i class="fas fa-lock" style="color:var(--forest-light);"></i> Encrypted</span>
+            <span style="font-size:0.8rem; color:var(--text-soft); display:flex; align-items:center; gap:5px;"><i class="fas fa-check-circle" style="color:var(--forest-light);"></i> Trusted Operator</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div style="flex:1; min-width:280px;">
+        <div class="booking-card">
+          <h3><i class="fas fa-receipt" style="color:var(--gold);"></i> Payment Summary</h3>
+          <div style="background:var(--cream); border-radius:var(--radius); overflow:hidden; margin-bottom:1.25rem;">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80" alt="Bwindi" style="width:100%; height:120px; object-fit:cover;">
+            <div style="padding:0.75rem;">
+              <div style="font-weight:700; font-size:0.95rem; color:var(--forest);">Bwindi Gorilla Trek</div>
+              <div style="font-size:0.85rem; color:var(--text-soft);">3 Days · 2 Adults · Dec 15, 2026</div>
+            </div>
+          </div>
+          <div class="booking-total">
+            <div class="line"><span>Trek (2 × $500)</span><span>$1,000</span></div>
+            <div class="line"><span>Transport</span><span>$300</span></div>
+            <div class="line"><span>Accommodation</span><span>Included</span></div>
+            <div class="line total"><span><strong>Total</strong></span><span><strong>$1,300</strong></span></div>
+          </div>
+          <div style="background:#e8f5e9; border-radius:var(--radius); padding:1rem; margin-top:1rem; border:1px solid #c8e6c9;">
+            <div style="display:flex; align-items:center; gap:8px; font-size:0.88rem; color:#2e7d32; font-weight:600;"><i class="fas fa-shield-alt"></i> Booking Protection</div>
+            <p style="font-size:0.82rem; color:#388e3c; margin:0.4rem 0 0;">Free cancellation up to 48 hours before your trip. Permit guaranteed or full refund.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem; background:var(--white); border-radius:var(--radius); padding:1rem; box-shadow:var(--shadow); text-align:center;">
+          <a href="booking.html" style="font-size:0.88rem; color:var(--text-soft); display:flex; align-items:center; justify-content:center; gap:6px;"><i class="fas fa-arrow-left"></i> Back to details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Success Overlay -->
+<div id="successOverlay" style="display:none; position:fixed; inset:0; background:rgba(26,51,41,0.92); z-index:9999; display:none; align-items:center; justify-content:center; padding:2rem;">
+  <div style="background:white; border-radius:var(--radius-xl); padding:3rem; max-width:480px; text-align:center; animation:fadeUp 0.5s ease;">
+    <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
+    <h2 style="color:var(--forest); margin-bottom:0.5rem;">Booking Confirmed!</h2>
+    <p style="color:var(--text-soft); margin-bottom:1rem;">Your reference number is <strong style="color:var(--forest);">PS-UG-9823</strong>. A confirmation has been sent to your email.</p>
+    <div style="background:var(--cream); border-radius:var(--radius); padding:1rem; margin-bottom:1.5rem; font-size:0.9rem; text-align:left;">
+      <div style="font-weight:700; color:var(--forest); margin-bottom:0.5rem;">What happens next?</div>
+      <div style="color:var(--text-soft); line-height:2;">✅ Confirmation email sent<br>✅ Gorilla permit being secured<br>✅ Driver assigned 7 days before trip<br>✅ WhatsApp reminder 2 days before</div>
+    </div>
+    <a href="my-bookings.html" class="btn btn-lg" style="background:var(--forest); color:white; width:100%; display:flex; align-items:center; justify-content:center;">View My Bookings</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="padding-top:0; border:none;">
+      <p style="color:rgba(255,255,255,0.6);">© 2025 Pearl Safari Uganda — Secure Booking</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Note: API_BASE is now dynamically loaded from api-config.js (see <head>)
+// Uses window.API_BASE which is initialized asynchronously
+let activePaymentMethod = 'card';
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 2800);
+}
+
+function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
+function setupAuthCta() {
+  const authCta = document.getElementById('authCta');
+  const token = localStorage.getItem('authToken');
+  if (!authCta || !token) return;
+
+  authCta.innerHTML = '<i class="fas fa-calendar-check"></i> My Bookings';
+  authCta.href = 'my-bookings.html';
+
+  if (document.getElementById('logoutNavLink')) return;
+  const logoutLink = document.createElement('a');
+  logoutLink.id = 'logoutNavLink';
+  logoutLink.href = '#';
+  logoutLink.className = 'nav-cta';
+  logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+  logoutLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('currentBookingId');
+    localStorage.removeItem('currentBookingAmount');
+    localStorage.removeItem('currentPaymentMethod');
+    localStorage.removeItem('currentBookingReference');
+    window.location.href = 'index.html';
+  });
+  document.getElementById('mainNav').appendChild(logoutLink);
+}
+
+function showSavedBookingReference() {
+  const reference = localStorage.getItem('currentBookingReference');
+  const referenceElement = document.querySelector('#successOverlay strong');
+  if (reference && referenceElement) {
+    referenceElement.textContent = reference;
+  }
+}
+
+function switchPayment(type, el) {
+  activePaymentMethod = type;
+  document.querySelectorAll('.pm-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cardPanel').style.display = type === 'card' ? '' : 'none';
+  document.getElementById('mtnPanel').style.display = type === 'mtn' ? '' : 'none';
+  document.getElementById('airtelPanel').style.display = type === 'airtel' ? '' : 'none';
+}
+async function confirmPayment() {
+  if (!document.getElementById('termsCheck').checked) {
+    showToast('Please agree to the Terms & Conditions to proceed.', 'error');
+    return;
+  }
+
+  const token = localStorage.getItem('authToken');
+  const bookingId = localStorage.getItem('currentBookingId');
+  const amount = Number(localStorage.getItem('currentBookingAmount') || '1300');
+
+  if (!token || !bookingId) {
+    showToast('No active booking found. Please complete booking details first.', 'error');
+    window.location.href = 'booking.html';
+    return;
+  }
+
+  try {
+    const response = await fetch(`${window.API_BASE}/bookings/${bookingId}/payments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        amount,
+        method: activePaymentMethod,
+        reference: `PS-UG-${Date.now().toString().slice(-6)}`
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Payment failed.');
+    }
+
+    const referenceElement = document.querySelector('#successOverlay strong');
+    if (referenceElement && data.payment && data.payment.reference) {
+      referenceElement.textContent = data.payment.reference;
+    }
+
+    localStorage.removeItem('currentBookingId');
+    localStorage.removeItem('currentBookingAmount');
+    localStorage.removeItem('currentPaymentMethod');
+
+    const overlay = document.getElementById('successOverlay');
+    overlay.style.display = 'flex';
+  } catch (error) {
+    showToast(error.message || 'Could not process payment.', 'error');
+  }
+}
+function formatCard(el) {
+  let val = el.value.replace(/\D/g, '').substring(0, 16);
+  el.value = val.replace(/(.{4})/g, '$1 ').trim();
+}
+setupAuthCta();
+showSavedBookingReference();
+</script>
+</body>
+</html>

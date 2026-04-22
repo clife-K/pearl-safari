@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: pearl_safari_db
+    environment:
+      POSTGRES_USER: pearl_user
+      POSTGRES_PASSWORD: pearl_password_123
+      POSTGRES_DB: pearl_safari_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pearl_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: pearl_safari_app
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://pearl_user:pearl_password_123@db:5432/pearl_safari_db
+      PORT: 3000
+      JWT_SECRET: pearl-safari-secret-dev
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: npm run dev
+
+volumes:
+  postgres_data:

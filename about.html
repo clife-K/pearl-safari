@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Pearl Safari Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta"><i class="fas fa-user"></i> Login</a>
+    </nav>
+    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- Page Hero -->
+<div style="position:relative; overflow:hidden; background:var(--forest); padding:5rem 0 4rem;">
+  <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=1400&q=80') center/cover; opacity:0.25;"></div>
+  <div class="container" style="position:relative; z-index:1;">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.6);"><a href="index.html" style="color:rgba(255,255,255,0.7);">Home</a><span class="sep">/</span><span style="color:var(--gold);">About Us</span></div>
+    <span class="section-label">Our Story</span>
+    <h1 style="color:white; margin-top:0.5rem;">Born in Uganda.<br>Built for the World.</h1>
+    <p style="color:rgba(255,255,255,0.8); max-width:540px; font-size:1.1rem; margin-top:0.5rem;">Since 2015, we've been the local experts guiding travellers to Uganda's most extraordinary wildlife, landscapes, and cultures.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Story Section -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; margin-bottom:5rem;">
+      <div>
+        <span class="section-label">Who We Are</span>
+        <h2 style="margin-top:0.5rem;">A Family Company with Deep Roots in Uganda</h2>
+        <p>Founded in 2015, Pearl Safari Uganda started as a small family-run tour operator with one mission: to show the world the authentic beauty of Uganda — the Pearl of Africa. We believe travel should be seamless, responsible, and genuinely unforgettable.</p>
+        <p>Today, we are proud to be one of Uganda's most trusted local operators, specialising in gorilla trekking, wildlife safaris, and cultural experiences. Our trips are 100% customisable — we handle every detail from transport to accommodation and permits.</p>
+        <p>Unlike many online booking platforms, you deal directly with us. No middlemen. No inflated prices. Just honest, local expertise.</p>
+        <div style="display:flex; gap:1rem; margin-top:1.5rem; flex-wrap:wrap;">
+          <a href="contact.html" class="btn"><i class="fas fa-paper-plane"></i> Get in Touch</a>
+          <a href="packages.html" class="btn btn-outline">Browse Packages</a>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=700&q=80" alt="Safari landscape" style="width:100%; border-radius:var(--radius-lg); box-shadow:var(--shadow-lg);">
+        <div style="position:absolute; bottom:-20px; left:-20px; background:var(--gold); color:var(--forest); border-radius:var(--radius-lg); padding:1.25rem 1.5rem; box-shadow:var(--shadow);">
+          <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; line-height:1;">10+</div>
+          <div style="font-size:0.85rem; font-weight:600;">Years of Experience</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-banner">
+      <div class="stat-item"><span class="num">1,200+</span><div class="label">Happy Travelers</div></div>
+      <div class="stat-item"><span class="num">4.9★</span><div class="label">Google Rating</div></div>
+      <div class="stat-item"><span class="num">25+</span><div class="label">Destinations</div></div>
+      <div class="stat-item"><span class="num">100%</span><div class="label">Carbon-Neutral</div></div>
+    </div>
+
+    <!-- Why Us -->
+    <div style="margin:5rem 0;">
+      <div class="section-header">
+        <span class="section-label">Why Choose Us</span>
+        <h2>The Pearl Safari Difference</h2>
+      </div>
+      <div class="card-grid card-grid-4">
+        <div style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow); text-align:center;">
+          <div style="width:56px; height:56px; background:var(--cream-dark); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--forest); margin:0 auto 1rem;">🧭</div>
+          <h4 style="font-family:'DM Sans',sans-serif; margin-bottom:0.5rem;">Local Expertise</h4>
+          <p style="font-size:0.9rem;">Our guides are Ugandans born and raised near national parks. Nobody knows the trails and animals better.</p>
+        </div>
+        <div style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow); text-align:center;">
+          <div style="width:56px; height:56px; background:var(--cream-dark); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--forest); margin:0 auto 1rem;">💰</div>
+          <h4 style="font-family:'DM Sans',sans-serif; margin-bottom:0.5rem;">Fair, Transparent Prices</h4>
+          <p style="font-size:0.9rem;">No middlemen — you pay directly to local providers. What you see is what you pay. No hidden fees.</p>
+        </div>
+        <div style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow); text-align:center;">
+          <div style="width:56px; height:56px; background:var(--cream-dark); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--forest); margin:0 auto 1rem;">🌿</div>
+          <h4 style="font-family:'DM Sans',sans-serif; margin-bottom:0.5rem;">Sustainable Tourism</h4>
+          <p style="font-size:0.9rem;">We actively support community projects and wildlife conservation. Every booking contributes directly.</p>
+        </div>
+        <div style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow); text-align:center;">
+          <div style="width:56px; height:56px; background:var(--cream-dark); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--forest); margin:0 auto 1rem;">📱</div>
+          <h4 style="font-family:'DM Sans',sans-serif; margin-bottom:0.5rem;">24/7 Support</h4>
+          <p style="font-size:0.9rem;">WhatsApp, phone, email — we're always reachable. Before, during, and after your trip, we're here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <div class="section-header">
+      <span class="section-label">Our People</span>
+      <h2>Meet the Team</h2>
+      <p>The dedicated Ugandans behind every seamless safari experience.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">🧑🏾</div>
+        <h4>John Bosco</h4>
+        <div class="role">Founder & Head Guide</div>
+        <p>15+ years in East African safaris. Born near Bwindi, John has led over 800 gorilla treks.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩🏾</div>
+        <h4>Grace Auma</h4>
+        <div class="role">Operations Manager</div>
+        <p>Ensures every booking runs perfectly. Grace handles permits, logistics, and customer happiness.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👨🏾</div>
+        <h4>David Okello</h4>
+        <div class="role">Senior Driver-Guide</div>
+        <p>Knows every trail, waterhole, and animal behaviour. 12 years driving safaris across Uganda.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩🏿</div>
+        <h4>Immaculate Nankya</h4>
+        <div class="role">Customer Relations</div>
+        <p>Your first point of contact. Immaculate ensures every inquiry is answered within 2 hours.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span style="color:rgba(255,255,255,0.6)">Uganda</span></div></div><p>Authentic Ugandan adventures since 2015.</p><div class="footer-social"><a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-btn"><i class="fab fa-instagram"></i></a><a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a></div></div>
+      <div class="footer-col"><h4>Explore</h4><ul><li><a href="destinations.html">All Destinations</a></li><li><a href="packages.html">Packages</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+256700123456"><i class="fas fa-phone"></i> +256 700 123 456</a></li><li><a href="mailto:info@pearlsafari.ug"><i class="fas fa-envelope"></i> info@pearlsafari.ug</a></li></ul></div>
+      <div class="footer-col"><h4>Office Hours</h4><ul><li>Mon – Sat: 8am – 6pm</li><li>Sunday: 9am – 3pm (EAT)</li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Pearl Safari Uganda. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

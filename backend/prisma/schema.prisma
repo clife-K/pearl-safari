@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  STAFF
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum CurrencyCode {
+  USD
+  UGX
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  fullName     String
+  email        String     @unique
+  phone        String?
+  passwordHash String
+  role         UserRole   @default(CUSTOMER)
+  isActive     Boolean    @default(true)
+  lastLoginAt  DateTime?
+  bookings     Booking[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model Destination {
+  id          Int           @id @default(autoincrement())
+  name        String
+  slug        String        @unique
+  region      String?
+  country     String        @default("Uganda")
+  description String?
+  isActive    Boolean       @default(true)
+  packages    TourPackage[]
+  bookings    Booking[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model TourPackage {
+  id              Int           @id @default(autoincrement())
+  destinationId   Int?
+  title           String
+  slug            String        @unique
+  description     String?
+  durationDays    Int           @default(1)
+  basePrice       Decimal       @db.Decimal(10, 2)
+  currency        CurrencyCode  @default(USD)
+  isPublished     Boolean       @default(false)
+  destination     Destination?  @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+  bookings        Booking[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([destinationId])
+  @@index([isPublished])
+}
+
+model Booking {
+  id               Int           @id @default(autoincrement())
+  userId           Int
+  destinationId    Int?
+  tourPackageId    Int?
+  bookingReference String        @unique @default(cuid())
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  nationality      String?
+  specialRequests  String?
+  travelDate       DateTime?
+  adults           Int           @default(1)
+  children         Int           @default(0)
+  paymentMethod    String
+  subtotalAmount   Decimal?      @db.Decimal(10, 2)
+  discountAmount   Decimal?      @db.Decimal(10, 2)
+  taxAmount        Decimal?      @db.Decimal(10, 2)
+  totalAmount      Decimal       @db.Decimal(10, 2)
+  currency         CurrencyCode  @default(USD)
+  status           BookingStatus @default(PENDING)
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  destination      Destination?  @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+  tourPackage      TourPackage?  @relation(fields: [tourPackageId], references: [id], onDelete: SetNull)
+  payments         Payment[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
+  @@index([destinationId])
+  @@index([tourPackageId])
+  @@index([bookingReference])
+}
+
+model Payment {
+  id             Int           @id @default(autoincrement())
+  bookingId      Int
+  amount         Decimal       @db.Decimal(10, 2)
+  currency       CurrencyCode  @default(USD)
+  method         String
+  status         PaymentStatus @default(PENDING)
+  transactionRef String?       @unique
+  reference      String?       @unique
+  paidAt         DateTime?
+  booking        Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([bookingId, status])
+  @@index([transactionRef])
+}

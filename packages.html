@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari Packages | Pearl Safari Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html" class="active">Packages</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="nav-cta" id="authCta"><i class="fas fa-user"></i> Login</a>
+    </nav>
+    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div style="background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%); padding: 3rem 0 2.5rem;">
+  <div class="container">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.6);"><a href="index.html" style="color:rgba(255,255,255,0.7);">Home</a><span class="sep">/</span><span style="color:var(--gold);">Packages</span></div>
+    <h1 style="color:white; margin-bottom:0.5rem;">Curated Safari Packages</h1>
+    <p style="color:rgba(255,255,255,0.75); margin:0;">All packages include transport, accommodation, park fees & a professional guide</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div style="display:flex; flex-direction:column; gap:2rem;" id="packageList">
+
+      <!-- Package 1 -->
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80" alt="Gorilla Trek">
+          <div style="position:absolute; top:12px; left:12px; background:var(--gold); color:var(--forest); font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Best Seller</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> 3 Days</span>
+            <span class="pkg-tag"><i class="fas fa-users"></i> 2–8 people</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> Western Uganda</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Gorilla Expedition — Bwindi</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">The ultimate Uganda bucket-list experience. Trek through the ancient Bwindi rainforest to spend an unforgettable hour with a wild mountain gorilla family.</p>
+          <ul class="pkg-includes">
+            <li>Gorilla permit ($700 value) included</li>
+            <li>1 gorilla trek day with licensed rangers</li>
+            <li>2 nights at Buhoma forest lodge</li>
+            <li>All meals + return Kampala transfers</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="now">$850 <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 2 -->
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80" alt="Murchison Falls">
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> 4 Days</span>
+            <span class="pkg-tag"><i class="fas fa-users"></i> 2–10 people</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> Northern Uganda</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Murchison Falls Safari</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">Witness the world's most powerful waterfall, then cruise the Victoria Nile to its base. Game drives reveal elephants, lions, Rothschild giraffes, and hippos.</p>
+          <ul class="pkg-includes">
+            <li>2 game drives in open 4×4 safari vehicle</li>
+            <li>Nile boat cruise to base of falls</li>
+            <li>3 nights at Pakuba Safari Lodge</li>
+            <li>All meals + return Kampala transfers</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="now">$620 <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 3 -->
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="https://images.unsplash.com/photo-1572204097183-e1ab140342ed?w=600&q=80" alt="Jinja">
+          <div style="position:absolute; top:12px; left:12px; background:var(--forest-light); color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Adventure</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> 2 Days</span>
+            <span class="pkg-tag"><i class="fas fa-users"></i> 1–15 people</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> Eastern Uganda</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Jinja Adventure Weekend</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">An action-packed weekend at the Source of the Nile. White-water rafting, bungee jumping, kayaking, and a scenic boat ride to see where the Nile begins.</p>
+          <ul class="pkg-includes">
+            <li>Grade 5 white-water rafting (full day)</li>
+            <li>Source of the Nile boat cruise</li>
+            <li>1 night at Nile River Explorers Camp</li>
+            <li>All meals + transfers from Kampala</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="now">$280 <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 4 -->
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="https://images.unsplash.com/photo-1590686436287-a44f0a2b9491?w=600&q=80" alt="Lake Bunyonyi">
+          <div style="position:absolute; top:12px; left:12px; background:#c0392b; color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Save 12%</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> 5 Days</span>
+            <span class="pkg-tag"><i class="fas fa-users"></i> 2–8 people</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> South-West Uganda</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Gorillas & Lakes Explorer</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">The perfect combo — gorilla trekking in Bwindi followed by peaceful days on beautiful Lake Bunyonyi, the "Switzerland of Africa."</p>
+          <ul class="pkg-includes">
+            <li>1 gorilla trek permit (Bwindi)</li>
+            <li>Island hopping & dugout canoe on Bunyonyi</li>
+            <li>4 nights at mixed lodge/camp accommodation</li>
+            <li>Community walk + cultural village visit</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="was">Was $1,250</div>
+              <div class="now">$1,100 <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 5 -->
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=600&q=80" alt="Western Uganda">
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> 6 Days</span>
+            <span class="pkg-tag"><i class="fas fa-users"></i> 2–8 people</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> Western Uganda</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Western Uganda Grand Safari</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">The complete western Uganda circuit: Queen Elizabeth NP's tree-climbing lions, Kibale chimpanzee trek, and Bwindi gorillas — the Big Three in one trip.</p>
+          <ul class="pkg-includes">
+            <li>Gorilla permit + chimpanzee tracking permit</li>
+            <li>Queen Elizabeth game drive & Kazinga cruise</li>
+            <li>5 nights premium lodge accommodation</li>
+            <li>All meals + return Kampala transfers</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="now">$1,550 <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 6 -->
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&q=80" alt="Kidepo">
+          <div style="position:absolute; top:12px; left:12px; background:var(--forest-mid); color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Remote & Exclusive</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> 7 Days</span>
+            <span class="pkg-tag"><i class="fas fa-users"></i> 2–6 people</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> Northern Uganda</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Kidepo Valley Wilderness</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">Uganda's most remote and least-visited national park. Vast savannah, zebras, cheetahs, ostriches, and authentic Karamojong cultural immersion.</p>
+          <ul class="pkg-includes">
+            <li>3 full game drives in Kidepo Valley NP</li>
+            <li>Karamojong village and cultural visit</li>
+            <li>6 nights Apoka Safari Lodge accommodation</li>
+            <li>Bush breakfast + all meals + charter flight option</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="now">$1,350 <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Custom Package CTA -->
+    <div style="margin-top:3rem; background:linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%); border-radius:var(--radius-lg); padding:3rem; text-align:center; color:white;">
+      <h2 style="color:white; border:none; padding:0; margin-bottom:0.75rem;">Can't find what you're looking for?</h2>
+      <p style="color:rgba(255,255,255,0.8); max-width:500px; margin:0 auto 1.5rem;">We build fully custom safari itineraries. Tell us your dates, budget, and dream experiences — we'll design it from scratch.</p>
+      <a href="contact.html" class="btn btn-lg"><i class="fas fa-paper-plane"></i> Request a Custom Itinerary</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span style="color:rgba(255,255,255,0.6)">Uganda</span></div></div><p>Your trusted local tour operator since 2015.</p><div class="footer-social"><a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-btn"><i class="fab fa-instagram"></i></a><a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a></div></div>
+      <div class="footer-col"><h4>Explore</h4><ul><li><a href="destinations.html">All Destinations</a></li><li><a href="packages.html">Packages</a></li><li><a href="about.html">About Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+256700123456"><i class="fas fa-phone"></i> +256 700 123 456</a></li><li><a href="mailto:info@pearlsafari.ug"><i class="fas fa-envelope"></i> info@pearlsafari.ug</a></li></ul></div>
+      <div class="footer-col"><h4>Office Hours</h4><ul><li>Mon – Sat: 8am – 6pm</li><li>Sunday: 9am – 3pm (EAT)</li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Pearl Safari Uganda. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<script>
+const API_BASE = 'http://localhost:5000/api';
+const packageImages = {
+  'gorilla-expedition-bwindi': 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80',
+  'murchison-falls-safari': 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
+  'jinja-adventure-weekend': 'https://images.unsplash.com/photo-1572204097183-e1ab140342ed?w=600&q=80',
+  'gorillas-and-lakes-explorer': 'https://images.unsplash.com/photo-1590686436287-a44f0a2b9491?w=600&q=80',
+  'western-uganda-grand-safari': 'https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=600&q=80',
+  'kidepo-valley-wilderness': 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&q=80'
+};
+
+function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
+
+function setupAuthCta() {
+  const authCta = document.getElementById('authCta');
+  const token = localStorage.getItem('authToken');
+  if (!authCta) return;
+  if (!token) return;
+
+  authCta.innerHTML = '<i class="fas fa-calendar-check"></i> My Bookings';
+  authCta.href = 'my-bookings.html';
+
+  if (document.getElementById('logoutNavLink')) return;
+  const logoutLink = document.createElement('a');
+  logoutLink.id = 'logoutNavLink';
+  logoutLink.href = '#';
+  logoutLink.className = 'nav-cta';
+  logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+  logoutLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('currentBookingId');
+    localStorage.removeItem('currentBookingAmount');
+    localStorage.removeItem('currentPaymentMethod');
+    localStorage.removeItem('currentBookingReference');
+    window.location.href = 'index.html';
+  });
+  document.getElementById('mainNav').appendChild(logoutLink);
+}
+
+function renderPackages(packages) {
+  const packageList = document.getElementById('packageList');
+  if (!packageList || !packages.length) return;
+
+  packageList.innerHTML = packages.map((pkg) => {
+    const image = packageImages[pkg.slug] || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80';
+    const region = pkg.destination?.region || pkg.destination?.country || 'Uganda';
+    const price = Number(pkg.basePrice || 0).toLocaleString();
+
+    return `
+      <div class="package-card">
+        <div class="pkg-img">
+          <img src="${image}" alt="${pkg.title}">
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-tags">
+            <span class="pkg-tag"><i class="fas fa-clock"></i> ${pkg.durationDays} Days</span>
+            <span class="pkg-tag"><i class="fas fa-map-marker-alt"></i> ${region}</span>
+            <span class="pkg-tag"><i class="fas fa-suitcase"></i> Curated Tour</span>
+          </div>
+          <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">${pkg.title}</h3>
+          <p style="color:var(--text-soft); margin-bottom:0.75rem;">${pkg.description || 'A professionally curated Uganda safari package designed for comfort and adventure.'}</p>
+          <div class="pkg-footer">
+            <div class="pkg-price-block">
+              <div class="now">$${price} <span class="per">per person</span></div>
+            </div>
+            <a href="booking.html" class="btn"><i class="fas fa-calendar-check"></i> Book Package</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function loadPackages() {
+  try {
+    const response = await fetch(`${API_BASE}/packages`);
+    const data = await response.json();
+    if (!response.ok || !data.packages) return;
+    renderPackages(data.packages);
+  } catch (error) {
+    // Keep static fallback content if API is unavailable.
+  }
+}
+
+setupAuthCta();
+loadPackages();
+</script>
+</body>
+</html>
