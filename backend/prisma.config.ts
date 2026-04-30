@@ -8,9 +8,19 @@ const currentFile = fileURLToPath(import.meta.url);
 const currentDir = path.dirname(currentFile);
 const envPath = path.resolve(currentDir, ".env");
 
-dotenv.config({ path: envPath, override: true });
-const envFromFile = dotenv.parse(fs.readFileSync(envPath));
-const databaseUrl = envFromFile.DATABASE_URL || process.env.DATABASE_URL;
+// Local dev: load `.env`. Production (Railway, Docker): only `process.env` — no `.env` file.
+let databaseUrl = process.env.DATABASE_URL;
+if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath, override: true });
+    const envFromFile = dotenv.parse(fs.readFileSync(envPath));
+    databaseUrl = envFromFile.DATABASE_URL || process.env.DATABASE_URL;
+}
+
+if (!databaseUrl) {
+    throw new Error(
+        "DATABASE_URL is missing. Attach PostgreSQL in Railway or set DATABASE_URL.",
+    );
+}
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
