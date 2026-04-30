@@ -1,0 +1,3 @@
+# Ensure Nixpacks (Railway) uses a Node version compatible with Prisma 7
+[variables]
+NIXPACKS_NODE_VERSION = "22"

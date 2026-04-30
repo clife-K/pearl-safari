@@ -1,25 +1,20 @@
-FROM node:18-alpine
+# Prisma 7 requires Node 20.19+, 22.12+, or 24+
+FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY backend/package*.json ./
+# Mirror local layout: repo root assets + backend/ (so server static path ../ works)
+COPY backend/package*.json ./backend/
+RUN cd backend && npm install --omit=dev
 
-# Install dependencies
-RUN npm install --production
+COPY backend/ ./backend/
+COPY *.html *.css *.js ./
 
-# Copy backend source
-COPY backend/ .
+WORKDIR /app/backend
 
-# Copy frontend files
-COPY *.html *.css *.js ./public/
+EXPOSE 5000
 
-# Expose port
-EXPOSE 3000
-
-# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+  CMD node -e "require('http').get('http://127.0.0.1:'+(process.env.PORT||5000)+'/api/health',(r)=>{process.exit(r.statusCode===200?0:1)}).on('error',()=>process.exit(1))"
 
-# Start server
 CMD ["node", "server.js"]

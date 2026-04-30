@@ -21,6 +21,7 @@ services:
   app:
     build: .
     container_name: pearl_safari_app
+    working_dir: /app/backend
     environment:
       NODE_ENV: development
       DATABASE_URL: postgresql://pearl_user:pearl_password_123@db:5432/pearl_safari_db
@@ -33,8 +34,8 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./backend:/app
-    command: npm run dev
+      - .:/app
+    command: sh -c "npm install && npm run dev"
 
 volumes:
   postgres_data:
