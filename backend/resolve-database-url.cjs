@@ -8,7 +8,12 @@
 function resolveDatabaseUrl() {
     const direct =
         process.env.DATABASE_URL ||
-        process.env.DATABASE_PUBLIC_URL;
+        process.env.DATABASE_PUBLIC_URL ||
+        process.env.POSTGRES_URL ||
+        process.env.POSTGRES_PRISMA_URL ||
+        process.env.POSTGRES_DATABASE_URL ||
+        process.env.NEON_DATABASE_URL ||
+        process.env.SHADOW_DATABASE_URL;
     if (direct && direct.trim()) {
         return direct.trim();
     }

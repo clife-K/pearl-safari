@@ -19,8 +19,19 @@ if (fs.existsSync(envPath)) {
 
 const databaseUrl = resolveDatabaseUrl();
 if (!databaseUrl) {
+    const postgresRelatedKeys = Object.keys(process.env)
+        .filter(
+            (k) =>
+                /^(DATABASE|PG|POSTGRES|NEON|SQLPOOL)/i.test(k) ||
+                (k.includes("PRISMA") && k.includes("URL")),
+        )
+        .sort();
+    const suffix =
+        postgresRelatedKeys.length > 0
+            ? ` This container does have some DB-related keys: ${postgresRelatedKeys.join(", ")}.`
+            : " This container has no DATABASE_URL / PG* / POSTGRES* keys — Postgres is not wired to THIS service.";
     throw new Error(
-        "DATABASE_URL is not available. In Railway: select your Postgres service → use “Variable Reference” to expose DATABASE_PUBLIC_URL or DATABASE_URL to your web service (or paste DATABASE_URL under the web app Variables tab).",
+        `DATABASE_URL missing on your WEB service.${suffix} In Railway Web service Variables, add DATABASE_URL as a Reference to Postgres (repo file railway-web-vars.txt has an example line).`,
     );
 }
 

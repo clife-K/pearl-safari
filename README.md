@@ -118,9 +118,10 @@ FRONTEND_URL=http://localhost:3000
 1. Push code to GitHub
 2. Go to [railway.app](https://railway.app)
 3. Create new project, connect repo
-4. Add PostgreSQL service
-5. Set environment variables
-6. Deploy!
+4. Add **PostgreSQL** in the **same project**
+5. Open your **web / Docker application service** (not Postgres) → **Variables**, and assign **`DATABASE_URL`** by referencing the Postgres service (**`${{ Postgres.DATABASE_URL }}`** — pick the exact service name Railway shows after typing `${{` in autocomplete). Optionally paste the starter block from **`railway-web-vars.txt`** and set **`JWT_SECRET`**. Deploy.
+
+**If deployments loop with “DATABASE_URL is not available”, the web service does not yet have Postgres variables — step 5 is mandatory.** Railway runs in the cloud; your laptop can be off afterward.
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed guides for:
 - Railway

@@ -1,0 +1,5 @@
+# Web / Docker APPLICATION service ONLY (never paste into Postgres service).
+# Use Variables → Raw Editor. If Postgres tile is NOT named "Postgres", type ${{ then pick DATABASE_URL from autocomplete (service name differs).
+DATABASE_URL=${{ Postgres.DATABASE_URL }}
+NODE_ENV=production
+JWT_SECRET=REPLACE_WITH_AT_LEAST_40_RANDOM_CHARACTERS
