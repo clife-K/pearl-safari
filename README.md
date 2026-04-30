@@ -74,6 +74,11 @@ Open **`http://localhost:5000`** (same server powers `/api` and the pages under 
 
 Place JPG/JPEG files referenced in pages under **`frontend/images/`** (see `<img src="images/...">` in HTML). Until then, some thumbnails may 404; the site still runs.
 
+### Prisma Client / Postgres auth
+
+- **`Cannot find module '.prisma/client/default'`** → from `backend` run **`npx prisma generate`** (or **`npm install`**, which now runs **`prisma generate` on postinstall**).
+- **`P1000` authentication failed / `pearl_user`** → your **`DATABASE_URL` in `backend/.env`** does not match Postgres. Use Windows superuser **`postgres`** plus the password you set at install (**see `backend/.env.example`**), **or** create `pearl_user` and matching password in Postgres. Prisma prefers **Node 22 LTS**; **Node 25** may show engine warnings.
+
 ## API Endpoints
 
 ### Authentication

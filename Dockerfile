@@ -3,13 +3,12 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-COPY backend/package*.json ./backend/
-RUN cd backend && npm install --omit=dev
-
 COPY backend/ ./backend/
 COPY frontend/ ./frontend/
 
 WORKDIR /app/backend
+
+RUN npm install --omit=dev
 
 EXPOSE 5000
 

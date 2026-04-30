@@ -17,7 +17,26 @@ if (fs.existsSync(envPath)) {
     dotenv.config({ path: envPath, override: true });
 }
 
-const databaseUrl = resolveDatabaseUrl();
+const resolvedDb = resolveDatabaseUrl();
+
+// Allow `prisma generate` / `validate` without a live DB URL (fresh clone, Docker build npm postinstall).
+// `migrate deploy`, server boot, studio, seed still require a REAL `DATABASE_URL` (handled below).
+const cliText = process.argv.join(" ");
+const lifecycle = process.env.npm_lifecycle_event || "";
+const allowDatasourceStub =
+    lifecycle === "postinstall" ||
+    /\bgenerate\b/.test(cliText) ||
+    /\bvalidate\b/.test(cliText) ||
+    /\bformat\b/.test(cliText);
+
+const STUB_DATABASE_URL =
+    "postgresql://prisma:stub@127.0.0.1:5432/__prisma_client_generation_only__";
+
+let databaseUrl = resolvedDb ?? null;
+if (!databaseUrl && allowDatasourceStub) {
+    databaseUrl = STUB_DATABASE_URL;
+}
+
 if (!databaseUrl) {
     const postgresRelatedKeys = Object.keys(process.env)
         .filter(
