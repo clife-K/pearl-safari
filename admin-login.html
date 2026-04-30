@@ -6,6 +6,7 @@
   <title>Admin Login | Pearl Safari Uganda</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="api-config.js"></script>
   <style>
     .admin-login {
       display: flex;
@@ -209,7 +210,7 @@
 </div>
 
 <script>
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = window.API_BASE;
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();

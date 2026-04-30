@@ -21,6 +21,10 @@ if (!databaseUrl) {
 process.env.DATABASE_URL = databaseUrl;
 
 const app = express();
+if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+}
+
 const pool = new Pool({ connectionString: databaseUrl });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
@@ -31,6 +35,14 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:3000")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
+
+const railwayPublic = process.env.RAILWAY_PUBLIC_DOMAIN;
+if (railwayPublic) {
+    const root = railwayPublic.includes("://") ? railwayPublic : `https://${railwayPublic}`;
+    if (!allowedOrigins.includes(root)) {
+        allowedOrigins.push(root);
+    }
+}
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -57,9 +69,17 @@ const JWT_SECRET = process.env.JWT_SECRET || "replace-me";
 
 // ═══════════════ CONFIG ENDPOINT ═══════════════
 app.get("/api/config", (req, res) => {
+    const xfProto = (req.get("x-forwarded-proto") || "").split(",")[0].trim();
+    const xfHost = (req.get("x-forwarded-host") || "").split(",")[0].trim();
+    let proto = xfProto || req.protocol || "http";
+    if (proto !== "http" && proto !== "https") {
+        proto = process.env.NODE_ENV === "production" ? "https" : req.protocol || "http";
+    }
+    const host = xfHost || req.get("host") || "localhost";
+
     return res.json({
-        apiUrl: `http${process.env.NODE_ENV === 'production' ? 's' : ''}://${req.get('host')}/api`,
-        environment: process.env.NODE_ENV || 'development'
+        apiUrl: `${proto}://${host}/api`,
+        environment: process.env.NODE_ENV || "development",
     });
 });
 
