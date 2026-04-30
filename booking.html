@@ -1,286 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Complete Booking | Pearl Safari Uganda</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="api-config.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Booking | Pearl Safari Uganda</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="api-config.js"></script>
 </head>
+
 <body>
-<header>
-  <div class="container header-inner">
-    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
-    <nav id="mainNav">
-      <a href="index.html">Home</a>
-      <a href="destinations.html">Destinations</a>
-      <a href="packages.html">Packages</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="nav-cta" id="authCta"><i class="fas fa-user"></i> Login</a>
-    </nav>
-    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
-  </div>
-</header>
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+            <nav id="mainNav">
+                <a href="index.html">Home</a>
+                <a href="destinations.html">Destinations</a>
+                <a href="packages.html">Packages</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="nav-cta" id="authCta"><i class="fas fa-user"></i> Login</a>
+            </nav>
+            <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+        </div>
+    </header>
 
-<section class="section-sm">
-  <div class="container">
+    <section class="section-sm">
+        <div class="container">
 
-    <!-- Step Indicator -->
-    <div class="steps" style="max-width:500px;">
-      <div class="step-item active">
-        <div class="step-num">1</div>
-        <div class="step-label">Your Details</div>
-      </div>
-      <div class="step-connector"></div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-label">Extras</div>
-      </div>
-      <div class="step-connector"></div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-label">Payment</div>
-      </div>
-    </div>
-
-    <div class="attraction-layout">
-      <!-- Form -->
-      <div style="flex:2;">
-        <div class="booking-form-card">
-          <div class="form-section-title"><i class="fas fa-user"></i> &nbsp;Traveller Details</div>
-          <form id="bookingForm" onsubmit="proceedToPayment(event)">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-              <div class="form-field">
-                <label>First Name *</label>
-                <input type="text" required placeholder="John">
-              </div>
-              <div class="form-field">
-                <label>Last Name *</label>
-                <input type="text" required placeholder="Mutesi">
-              </div>
-            </div>
-            <div class="form-field">
-              <label>Email Address *</label>
-              <input type="email" required placeholder="john@example.com">
-            </div>
-            <div class="form-field">
-              <label>WhatsApp / Phone *</label>
-              <input type="tel" required placeholder="+256 700 123 456">
-            </div>
-            <div class="form-field">
-              <label>Nationality</label>
-              <input type="text" placeholder="e.g., Ugandan, British, American">
-            </div>
-            <div class="form-field">
-              <label>Special Requests <span style="color:var(--text-soft); font-weight:400;">(dietary, medical, accessibility needs…)</span></label>
-              <textarea rows="3" placeholder="E.g., vegetarian meals, need porter for gorilla trek, wheelchair access…"></textarea>
+            <!-- Step Indicator -->
+            <div class="steps" style="max-width:500px;">
+                <div class="step-item active">
+                    <div class="step-num">1</div>
+                    <div class="step-label">Your Details</div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-label">Extras</div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-label">Payment</div>
+                </div>
             </div>
 
-            <div class="form-section-title" style="margin-top:1.5rem;"><i class="fas fa-credit-card"></i> &nbsp;Preferred Payment Method</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem;">
-              <label style="background:var(--cream); border:2px solid var(--sand); border-radius:var(--radius); padding:1rem; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all 0.2s;" onclick="selectPayment(this)">
+            <div class="attraction-layout">
+                <!-- Form -->
+                <div style="flex:2;">
+                    <div class="booking-form-card">
+                        <div class="form-section-title"><i class="fas fa-user"></i> &nbsp;Traveller Details</div>
+                        <form id="bookingForm" onsubmit="proceedToPayment(event)">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                                <div class="form-field">
+                                    <label>First Name *</label>
+                                    <input type="text" required placeholder="John">
+                                </div>
+                                <div class="form-field">
+                                    <label>Last Name *</label>
+                                    <input type="text" required placeholder="Mutesi">
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Email Address *</label>
+                                <input type="email" required placeholder="john@example.com">
+                            </div>
+                            <div class="form-field">
+                                <label>WhatsApp / Phone *</label>
+                                <input type="tel" required placeholder="+256 700 123 456">
+                            </div>
+                            <div class="form-field">
+                                <label>Nationality</label>
+                                <input type="text" placeholder="e.g., Ugandan, British, American">
+                            </div>
+                            <div class="form-field">
+                                <label>Special Requests <span style="color:var(--text-soft); font-weight:400;">(dietary, medical, accessibility needs…)</span></label>
+                                <textarea rows="3" placeholder="E.g., vegetarian meals, need porter for gorilla trek, wheelchair access…"></textarea>
+                            </div>
+
+                            <div class="form-section-title" style="margin-top:1.5rem;"><i class="fas fa-credit-card"></i> &nbsp;Preferred Payment Method</div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem;">
+                                <label style="background:var(--cream); border:2px solid var(--sand); border-radius:var(--radius); padding:1rem; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all 0.2s;" onclick="selectPayment(this)">
                 <input type="radio" name="payment" value="card" style="accent-color:var(--forest);"> <span><strong style="display:block; font-size:0.9rem;">Credit / Debit Card</strong><small style="color:var(--text-soft);">Visa, Mastercard</small></span>
               </label>
-              <label style="background:var(--cream); border:2px solid var(--sand); border-radius:var(--radius); padding:1rem; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all 0.2s;" onclick="selectPayment(this)">
+                                <label style="background:var(--cream); border:2px solid var(--sand); border-radius:var(--radius); padding:1rem; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all 0.2s;" onclick="selectPayment(this)">
                 <input type="radio" name="payment" value="mobile"> <span><strong style="display:block; font-size:0.9rem;">Mobile Money</strong><small style="color:var(--text-soft);">MTN / Airtel Uganda</small></span>
               </label>
-            </div>
+                            </div>
 
-            <button type="submit" class="btn btn-block btn-lg">
+                            <button type="submit" class="btn btn-block btn-lg">
               <i class="fas fa-arrow-right"></i> Proceed to Payment
             </button>
-            <p style="text-align:center; font-size:0.82rem; color:var(--text-soft); margin-top:0.75rem;"><i class="fas fa-lock"></i> Your information is encrypted and secure</p>
-          </form>
-        </div>
-      </div>
+                            <p style="text-align:center; font-size:0.82rem; color:var(--text-soft); margin-top:0.75rem;"><i class="fas fa-lock"></i> Your information is encrypted and secure</p>
+                        </form>
+                    </div>
+                </div>
 
-      <!-- Summary -->
-      <div style="flex:1; min-width:280px;">
-        <div class="booking-card">
-          <h3><i class="fas fa-receipt" style="color:var(--gold);"></i> Booking Summary</h3>
+                <!-- Summary -->
+                <div style="flex:1; min-width:280px;">
+                    <div class="booking-card">
+                        <h3><i class="fas fa-receipt" style="color:var(--gold);"></i> Booking Summary</h3>
 
-          <div style="background:var(--cream); border-radius:var(--radius); overflow:hidden; margin-bottom:1.25rem;">
-            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80" alt="Bwindi" style="width:100%; height:130px; object-fit:cover;">
-            <div style="padding:0.75rem;">
-              <div style="font-weight:700; font-size:0.95rem; color:var(--forest);">Bwindi Gorilla Trek</div>
-              <div style="font-size:0.85rem; color:var(--text-soft);">3 Days · 2 Adults · Dec 15, 2026</div>
+                        <div style="background:var(--cream); border-radius:var(--radius); overflow:hidden; margin-bottom:1.25rem;">
+                            <img src="images/bwindi1.jpg" alt="Bwindi" style="width:100%; height:130px; object-fit:cover;">
+                            <div style="padding:0.75rem;">
+                                <div style="font-weight:700; font-size:0.95rem; color:var(--forest);">Bwindi Gorilla Trek</div>
+                                <div style="font-size:0.85rem; color:var(--text-soft);">3 Days · 2 Adults · Dec 15, 2026</div>
+                            </div>
+                        </div>
+
+                        <div class="booking-total">
+                            <div class="line"><span>Base price (2 × $500)</span><span>$1,000</span></div>
+                            <div class="line"><span>Transport from Kampala</span><span>$300</span></div>
+                            <div class="line"><span>Accommodation (standard)</span><span>Included</span></div>
+                            <div class="line total"><span>Total</span><span>$1,300</span></div>
+                        </div>
+
+                        <div class="form-section-title" style="margin:1rem 0 0.5rem;">Have a promo code?</div>
+                        <div class="promo-row">
+                            <input type="text" placeholder="Enter promo code">
+                            <button onclick="showToast('Promo feature is demo-only for now.', 'info'); return false;" class="btn btn-sm btn-forest">Apply</button>
+                        </div>
+
+                        <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.6rem;">
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-shield-alt" style="color:var(--forest-light);"></i> Permit guaranteed</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-sync-alt" style="color:var(--forest-light);"></i> Free cancellation 48h before</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-lock" style="color:var(--forest-light);"></i> SSL secure payment</div>
+                        </div>
+                    </div>
+
+                    <div class="whatsapp-link" style="margin-top:1rem; background:var(--white); border-radius:var(--radius); padding:1rem; box-shadow:var(--shadow);">
+                        <i class="fab fa-whatsapp" style="font-size:1.2rem; color:#25d366;"></i>
+                        <div>
+                            <div style="font-weight:600; font-size:0.9rem;">Need help?</div>
+                            <a href="https://wa.me/256712345678" style="font-size:0.85rem; color:var(--text-soft);">Chat on WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div class="booking-total">
-            <div class="line"><span>Base price (2 × $500)</span><span>$1,000</span></div>
-            <div class="line"><span>Transport from Kampala</span><span>$300</span></div>
-            <div class="line"><span>Accommodation (standard)</span><span>Included</span></div>
-            <div class="line total"><span>Total</span><span>$1,300</span></div>
-          </div>
-
-          <div class="form-section-title" style="margin:1rem 0 0.5rem;">Have a promo code?</div>
-          <div class="promo-row">
-            <input type="text" placeholder="Enter promo code">
-            <button onclick="showToast('Promo feature is demo-only for now.', 'info'); return false;" class="btn btn-sm btn-forest">Apply</button>
-          </div>
-
-          <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.6rem;">
-            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-shield-alt" style="color:var(--forest-light);"></i> Permit guaranteed</div>
-            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-sync-alt" style="color:var(--forest-light);"></i> Free cancellation 48h before</div>
-            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-lock" style="color:var(--forest-light);"></i> SSL secure payment</div>
-          </div>
         </div>
+    </section>
+    <div class="toast-container" id="toastContainer"></div>
 
-        <div class="whatsapp-link" style="margin-top:1rem; background:var(--white); border-radius:var(--radius); padding:1rem; box-shadow:var(--shadow);">
-          <i class="fab fa-whatsapp" style="font-size:1.2rem; color:#25d366;"></i>
-          <div>
-            <div style="font-weight:600; font-size:0.9rem;">Need help?</div>
-            <a href="https://wa.me/256712345678" style="font-size:0.85rem; color:var(--text-soft);">Chat on WhatsApp</a>
-          </div>
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="padding-top:0; border:none;">
+                <p style="color:rgba(255,255,255,0.6);">© 2025 Pearl Safari Uganda — Secure Booking</p>
+                <p style="color:rgba(255,255,255,0.4); font-size:0.82rem;"><i class="fas fa-lock"></i> SSL Encrypted · Your data is safe</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<div class="toast-container" id="toastContainer"></div>
+    </footer>
 
-<footer>
-  <div class="container">
-    <div class="footer-bottom" style="padding-top:0; border:none;">
-      <p style="color:rgba(255,255,255,0.6);">© 2025 Pearl Safari Uganda — Secure Booking</p>
-      <p style="color:rgba(255,255,255,0.4); font-size:0.82rem;"><i class="fas fa-lock"></i> SSL Encrypted · Your data is safe</p>
-    </div>
-  </div>
-</footer>
+    <script>
+        // Note: API_BASE is now dynamically loaded from api-config.js (see <head>)
+        // Uses window.API_BASE which is initialized asynchronously
+        const BOOKING_TOTAL = 1300;
 
-<script>
-// Note: API_BASE is now dynamically loaded from api-config.js (see <head>)
-// Uses window.API_BASE which is initialized asynchronously
-const BOOKING_TOTAL = 1300;
-function showToast(message, type = 'info') {
-  const container = document.getElementById('toastContainer');
-  if (!container) return;
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => toast.remove(), 2800);
-}
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 2800);
+        }
 
-function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
+        function toggleNav() {
+            document.getElementById('mainNav').classList.toggle('open');
+        }
 
-function setupAuthCta() {
-  const authCta = document.getElementById('authCta');
-  const token = localStorage.getItem('authToken');
-  if (!authCta || !token) return;
+        function setupAuthCta() {
+            const authCta = document.getElementById('authCta');
+            const token = localStorage.getItem('authToken');
+            if (!authCta || !token) return;
 
-  authCta.innerHTML = '<i class="fas fa-calendar-check"></i> My Bookings';
-  authCta.href = 'my-bookings.html';
+            authCta.innerHTML = '<i class="fas fa-calendar-check"></i> My Bookings';
+            authCta.href = 'my-bookings.html';
 
-  if (document.getElementById('logoutNavLink')) return;
-  const logoutLink = document.createElement('a');
-  logoutLink.id = 'logoutNavLink';
-  logoutLink.href = '#';
-  logoutLink.className = 'nav-cta';
-  logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-  logoutLink.addEventListener('click', (event) => {
-    event.preventDefault();
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('currentBookingId');
-    localStorage.removeItem('currentBookingAmount');
-    localStorage.removeItem('currentPaymentMethod');
-    localStorage.removeItem('currentBookingReference');
-    window.location.href = 'index.html';
-  });
-  document.getElementById('mainNav').appendChild(logoutLink);
-}
+            if (document.getElementById('logoutNavLink')) return;
+            const logoutLink = document.createElement('a');
+            logoutLink.id = 'logoutNavLink';
+            logoutLink.href = '#';
+            logoutLink.className = 'nav-cta';
+            logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+            logoutLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('currentBookingId');
+                localStorage.removeItem('currentBookingAmount');
+                localStorage.removeItem('currentPaymentMethod');
+                localStorage.removeItem('currentBookingReference');
+                window.location.href = 'index.html';
+            });
+            document.getElementById('mainNav').appendChild(logoutLink);
+        }
 
-function prefillUserDetails() {
-  const userRaw = localStorage.getItem('user');
-  if (!userRaw) return;
+        function prefillUserDetails() {
+            const userRaw = localStorage.getItem('user');
+            if (!userRaw) return;
 
-  try {
-    const user = JSON.parse(userRaw);
-    const [firstNameInput, lastNameInput, emailInput, phoneInput] =
-      document.querySelectorAll('#bookingForm input');
-    if (!firstNameInput || !lastNameInput || !emailInput || !phoneInput) return;
+            try {
+                const user = JSON.parse(userRaw);
+                const [firstNameInput, lastNameInput, emailInput, phoneInput] =
+                document.querySelectorAll('#bookingForm input');
+                if (!firstNameInput || !lastNameInput || !emailInput || !phoneInput) return;
 
-    if (user.fullName) {
-      const parts = user.fullName.trim().split(' ');
-      firstNameInput.value = parts.shift() || '';
-      lastNameInput.value = parts.join(' ');
-    }
-    if (user.email) emailInput.value = user.email;
-    if (user.phone) phoneInput.value = user.phone;
-  } catch (error) {
-    // Ignore invalid local data and keep empty form.
-  }
-}
+                if (user.fullName) {
+                    const parts = user.fullName.trim().split(' ');
+                    firstNameInput.value = parts.shift() || '';
+                    lastNameInput.value = parts.join(' ');
+                }
+                if (user.email) emailInput.value = user.email;
+                if (user.phone) phoneInput.value = user.phone;
+            } catch (error) {
+                // Ignore invalid local data and keep empty form.
+            }
+        }
 
-async function proceedToPayment(e) {
-  e.preventDefault();
+        async function proceedToPayment(e) {
+            e.preventDefault();
 
-  const token = localStorage.getItem('authToken');
-  if (!token) {
-    showToast('Please login first.', 'error');
-    window.location.href = 'login.html';
-    return;
-  }
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                showToast('Please login first.', 'error');
+                window.location.href = 'login.html';
+                return;
+            }
 
-  const form = document.getElementById('bookingForm');
-  const formFields = form.querySelectorAll('input, textarea');
-  const selectedPayment = document.querySelector('input[name="payment"]:checked');
+            const form = document.getElementById('bookingForm');
+            const formFields = form.querySelectorAll('input, textarea');
+            const selectedPayment = document.querySelector('input[name="payment"]:checked');
 
-  if (!selectedPayment) {
-    showToast('Please choose a payment method.', 'error');
-    return;
-  }
+            if (!selectedPayment) {
+                showToast('Please choose a payment method.', 'error');
+                return;
+            }
 
-  const payload = {
-    firstName: formFields[0].value.trim(),
-    lastName: formFields[1].value.trim(),
-    email: formFields[2].value.trim(),
-    phone: formFields[3].value.trim(),
-    nationality: formFields[4].value.trim(),
-    specialRequests: formFields[5].value.trim(),
-    paymentMethod: selectedPayment.value,
-    totalAmount: BOOKING_TOTAL
-  };
+            const payload = {
+                firstName: formFields[0].value.trim(),
+                lastName: formFields[1].value.trim(),
+                email: formFields[2].value.trim(),
+                phone: formFields[3].value.trim(),
+                nationality: formFields[4].value.trim(),
+                specialRequests: formFields[5].value.trim(),
+                paymentMethod: selectedPayment.value,
+                totalAmount: BOOKING_TOTAL
+            };
 
-  try {
-    const response = await fetch(`${window.API_BASE}/bookings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(payload)
-    });
+            try {
+                const response = await fetch(`${window.API_BASE}/bookings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
 
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || 'Could not create booking.');
-    }
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Could not create booking.');
+                }
 
-    localStorage.setItem('currentBookingId', String(data.booking.id));
-    localStorage.setItem('currentBookingAmount', String(BOOKING_TOTAL));
-    localStorage.setItem('currentPaymentMethod', selectedPayment.value);
-    localStorage.setItem('currentBookingReference', data.booking.reference || data.booking.bookingReference || '');
-    showToast('Booking created. Proceeding to payment...', 'success');
-    setTimeout(() => { window.location.href = 'payment.html'; }, 450);
-  } catch (error) {
-    showToast(error.message || 'Booking failed. Please try again.', 'error');
-  }
-}
-function selectPayment(el) {
-  document.querySelectorAll('label[onclick]').forEach(l => {
-    l.style.borderColor = 'var(--sand)';
-    l.style.background = 'var(--cream)';
-  });
-  el.style.borderColor = 'var(--forest)';
-  el.style.background = 'rgba(26,51,41,0.05)';
-}
-setupAuthCta();
-prefillUserDetails();
-</script>
+                localStorage.setItem('currentBookingId', String(data.booking.id));
+                localStorage.setItem('currentBookingAmount', String(BOOKING_TOTAL));
+                localStorage.setItem('currentPaymentMethod', selectedPayment.value);
+                localStorage.setItem('currentBookingReference', data.booking.reference || data.booking.bookingReference || '');
+                showToast('Booking created. Proceeding to payment...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'payment.html';
+                }, 450);
+            } catch (error) {
+                showToast(error.message || 'Booking failed. Please try again.', 'error');
+            }
+        }
+
+        function selectPayment(el) {
+            document.querySelectorAll('label[onclick]').forEach(l => {
+                l.style.borderColor = 'var(--sand)';
+                l.style.background = 'var(--cream)';
+            });
+            el.style.borderColor = 'var(--forest)';
+            el.style.background = 'rgba(26,51,41,0.05)';
+        }
+        setupAuthCta();
+        prefillUserDetails();
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Pearl Safari Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --forest: #2d543a;
+      --forest-light: #4a7c59;
+      --forest-mid: #1f3d2a;
+      --gold: #d4af37;
+      --cream: #fdf9f3;
+      --cream-dark: #f5ede3;
+      --text-main: #2a2a2a;
+      --text-soft: #666;
+      --white: #ffffff;
+      --danger: #e74c3c;
+      --success: #27ae60;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      font-family: 'DM Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--cream);
+      color: var(--text-main);
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ═══════════════ SIDEBAR ═══════════════ */
+    .admin-sidebar {
+      background: var(--forest);
+      color: white;
+      padding: 2rem 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+    }
+
+    .admin-logo {
+      padding: 0 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .admin-nav {
+      padding: 1.5rem 0;
+    }
+
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .admin-nav-item:hover,
+    .admin-nav-item.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--gold);
+    }
+
+    .admin-nav-item i {
+      width: 24px;
+      text-align: center;
+    }
+
+    .admin-nav-label {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 1rem 1.5rem 0.5rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .admin-logout {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ═══════════════ MAIN CONTENT ═══════════════ */
+    .admin-main {
+      margin-left: 280px;
+      padding: 2rem;
+      background: var(--cream);
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .admin-header h1 {
+      font-size: 1.8rem;
+      color: var(--forest);
+    }
+
+    .admin-user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .admin-user-name {
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .admin-user-name .name {
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .admin-user-name .role {
+      color: var(--text-soft);
+      font-size: 0.85rem;
+    }
+
+    .admin-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--forest);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    /* ═══════════════ STATS GRID ═══════════════ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+
+    .stat-card-title {
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .stat-card-icon {
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+
+    .stat-card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card-change {
+      font-size: 0.85rem;
+      color: var(--success);
+    }
+
+    /* ═══════════════ RECENT BOOKINGS ═══════════════ */
+    .section-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: var(--cream-dark);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--forest);
+      font-size: 0.9rem;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    tr:hover {
+      background: var(--cream);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-confirmed {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-completed {
+      background: #cfe2ff;
+      color: #084298;
+    }
+
+    .status-cancelled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .status-paid {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    /* ═══════════════ BUTTONS ═══════════════ */
+    .btn-small {
+      padding: 0.5rem 1rem;
+      background: var(--forest);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .btn-small:hover {
+      background: var(--forest-mid);
+    }
+
+    .btn-logout {
+      background: var(--danger);
+    }
+
+    .btn-logout:hover {
+      background: #c0392b;
+    }
+
+    /* ═══════════════ RESPONSIVE ═══════════════ */
+    @media (max-width: 768px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .admin-main {
+        margin-left: 0;
+      }
+
+      .admin-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <div class="admin-sidebar">
+    <div class="admin-logo">
+      <i class="fas fa-paw"></i>
+      Pearl Safari
+    </div>
+
+    <div class="admin-nav-label">Main</div>
+    <a href="admin-dashboard.html" class="admin-nav-item active">
+      <i class="fas fa-chart-line"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <div class="admin-nav-label">Manage</div>
+    <a href="admin-bookings.html" class="admin-nav-item">
+      <i class="fas fa-calendar-check"></i>
+      <span>Bookings</span>
+    </a>
+    <a href="admin-payments.html" class="admin-nav-item">
+      <i class="fas fa-credit-card"></i>
+      <span>Payments</span>
+    </a>
+    <a href="admin-messages.html" class="admin-nav-item">
+      <i class="fas fa-envelope"></i>
+      <span>Messages</span>
+    </a>
+    <a href="admin-users.html" class="admin-nav-item">
+      <i class="fas fa-users"></i>
+      <span>Users</span>
+    </a>
+
+    <div class="admin-nav-label">Settings</div>
+    <div class="admin-nav-item admin-logout" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="admin-main">
+    <div class="admin-header">
+      <h1><i class="fas fa-chart-line"></i> Dashboard</h1>
+      <div class="admin-user-info">
+        <div class="admin-user-name">
+          <div class="name" id="adminName">Admin User</div>
+          <div class="role">Administrator</div>
+        </div>
+        <div class="admin-avatar" id="adminInitial">A</div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-title">Total Bookings</div>
+          <div class="stat-card-icon">📅</div>
+        </div>
+        <div class="stat-card-value" id="totalBookings">0</div>
+        <div class="stat-card-change">All time</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-title">Total Revenue</div>
+          <div class="stat-card-icon">💰</div>
+        </div>
+        <div class="stat-card-value" id="totalRevenue">$0</div>
+        <div class="stat-card-change">From paid bookings</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-title">Total Customers</div>
+          <div class="stat-card-icon">👥</div>
+        </div>
+        <div class="stat-card-value" id="totalUsers">0</div>
+        <div class="stat-card-change">Active customers</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-title">Pending Bookings</div>
+          <div class="stat-card-icon">⏳</div>
+        </div>
+        <div class="stat-card-value" id="pendingBookings">0</div>
+        <div class="stat-card-change">Awaiting confirmation</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-title">Unread Messages</div>
+          <div class="stat-card-icon">📬</div>
+        </div>
+        <div class="stat-card-value" id="unreadMessages">0</div>
+        <div class="stat-card-change">New inquiries</div>
+      </div>
+    </div>
+
+    <!-- RECENT BOOKINGS -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fas fa-recent"></i>
+        Recent Bookings
+      </div>
+      <div class="table-responsive">
+        <table id="recentBookingsTable">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-soft);">
+                Loading bookings...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_BASE = 'http://localhost:5000/api';
+
+  // Check authentication
+  function checkAuth() {
+    const token = localStorage.getItem('adminToken');
+    const user = localStorage.getItem('adminUser');
+
+    if (!token || !user) {
+      window.location.href = 'admin-login.html';
+      return;
+    }
+
+    try {
+      const adminUser = JSON.parse(user);
+      document.getElementById('adminName').textContent = adminUser.fullName || 'Admin User';
+      document.getElementById('adminInitial').textContent = (adminUser.fullName || 'A').charAt(0).toUpperCase();
+    } catch (e) {
+      console.error('Error parsing user data:', e);
+    }
+  }
+
+  // Load dashboard data
+  async function loadDashboard() {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(`${API_BASE}/admin/dashboard`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          window.location.href = 'admin-login.html';
+          return;
+        }
+        throw new Error('Failed to load dashboard');
+      }
+
+      const data = await response.json();
+
+      // Update stats
+      document.getElementById('totalBookings').textContent = data.stats.totalBookings;
+      document.getElementById('totalRevenue').textContent = `$${Number(data.stats.totalRevenue).toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+      document.getElementById('totalUsers').textContent = data.stats.totalUsers;
+      document.getElementById('pendingBookings').textContent = data.stats.pendingBookings;
+      document.getElementById('unreadMessages').textContent = data.stats.unreadMessages;
+
+      // Update recent bookings table
+      updateRecentBookings(data.recentBookings);
+    } catch (error) {
+      console.error('Dashboard load error:', error);
+      alert('Failed to load dashboard data');
+    }
+  }
+
+  function updateRecentBookings(bookings) {
+    const tbody = document.querySelector('#recentBookingsTable tbody');
+    
+    if (!bookings || bookings.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-soft);">No bookings found</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = bookings.map(booking => `
+      <tr>
+        <td><strong>${booking.bookingReference}</strong></td>
+        <td>${booking.firstName} ${booking.lastName}</td>
+        <td>$${Number(booking.totalAmount).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+        <td><span class="status-badge status-${booking.status.toLowerCase()}">${booking.status}</span></td>
+        <td>${new Date(booking.createdAt).toLocaleDateString()}</td>
+        <td><a href="admin-bookings.html?id=${booking.id}" class="btn-small">View</a></td>
+      </tr>
+    `).join('');
+  }
+
+  function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      window.location.href = 'admin-login.html';
+    }
+  }
+
+  // Initialize
+  checkAuth();
+  loadDashboard();
+
+  // Refresh every 30 seconds
+  setInterval(loadDashboard, 30000);
+</script>
+
+</body>
+</html>

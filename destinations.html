@@ -1,264 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Destinations | Pearl Safari Uganda</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="api-config.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Destinations | Pearl Safari Uganda</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="api-config.js"></script>
 </head>
+
 <body>
 
-<header>
-  <div class="container header-inner">
-    <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
-    <nav id="mainNav">
-      <a href="index.html">Home</a>
-      <a href="destinations.html" class="active">Destinations</a>
-      <a href="packages.html">Packages</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="nav-cta" id="authCta"><i class="fas fa-user"></i> Login</a>
-    </nav>
-    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
-  </div>
-</header>
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span>Uganda</span></div></a>
+            <nav id="mainNav">
+                <a href="index.html">Home</a>
+                <a href="destinations.html" class="active">Destinations</a>
+                <a href="packages.html">Packages</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="nav-cta" id="authCta"><i class="fas fa-user"></i> Login</a>
+            </nav>
+            <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+        </div>
+    </header>
 
-<div style="background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%); padding: 3rem 0 2.5rem;">
-  <div class="container">
-    <div class="breadcrumb" style="color:rgba(255,255,255,0.6);">
-      <a href="index.html" style="color:rgba(255,255,255,0.7);">Home</a>
-      <span class="sep">/</span>
-      <span style="color:var(--gold);">Destinations</span>
+    <div style="background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%); padding: 3rem 0 2.5rem;">
+        <div class="container">
+            <div class="breadcrumb" style="color:rgba(255,255,255,0.6);">
+                <a href="index.html" style="color:rgba(255,255,255,0.7);">Home</a>
+                <span class="sep">/</span>
+                <span style="color:var(--gold);">Destinations</span>
+            </div>
+            <h1 style="color:white; margin-bottom:0.5rem;">All Tourist Destinations</h1>
+            <p style="color:rgba(255,255,255,0.75); margin:0;">Explore 25+ extraordinary places across the Pearl of Africa</p>
+        </div>
     </div>
-    <h1 style="color:white; margin-bottom:0.5rem;">All Tourist Destinations</h1>
-    <p style="color:rgba(255,255,255,0.75); margin:0;">Explore 25+ extraordinary places across the Pearl of Africa</p>
-  </div>
-</div>
 
-<section class="section-sm">
-  <div class="container">
-    <div class="filter-layout">
+    <section class="section-sm">
+        <div class="container">
+            <div class="filter-layout">
 
-      <!-- Sidebar -->
-      <aside class="filter-sidebar">
-        <h3><i class="fas fa-sliders-h" style="color:var(--gold);"></i> Filter Results</h3>
+                <!-- Sidebar -->
+                <aside class="filter-sidebar">
+                    <h3><i class="fas fa-sliders-h" style="color:var(--gold);"></i> Filter Results</h3>
 
-        <div class="filter-group">
-          <h4>Region</h4>
-          <label><input type="checkbox" onchange="filterCards()"> Central Uganda</label>
-          <label><input type="checkbox" onchange="filterCards()"> Western Uganda</label>
-          <label><input type="checkbox" onchange="filterCards()"> Eastern Uganda</label>
-          <label><input type="checkbox" onchange="filterCards()"> Northern Uganda</label>
-        </div>
+                    <div class="filter-group">
+                        <h4>Region</h4>
+                        <label><input type="checkbox" onchange="filterCards()"> Central Uganda</label>
+                        <label><input type="checkbox" onchange="filterCards()"> Western Uganda</label>
+                        <label><input type="checkbox" onchange="filterCards()"> Eastern Uganda</label>
+                        <label><input type="checkbox" onchange="filterCards()"> Northern Uganda</label>
+                    </div>
 
-        <div class="filter-group">
-          <h4>Activity Type</h4>
-          <label><input type="checkbox" onchange="filterCards()"> Gorilla Trekking</label>
-          <label><input type="checkbox" onchange="filterCards()"> Wildlife Safari</label>
-          <label><input type="checkbox" onchange="filterCards()"> Boat Cruise</label>
-          <label><input type="checkbox" onchange="filterCards()"> Hiking</label>
-          <label><input type="checkbox" onchange="filterCards()"> White Water Rafting</label>
-        </div>
+                    <div class="filter-group">
+                        <h4>Activity Type</h4>
+                        <label><input type="checkbox" onchange="filterCards()"> Gorilla Trekking</label>
+                        <label><input type="checkbox" onchange="filterCards()"> Wildlife Safari</label>
+                        <label><input type="checkbox" onchange="filterCards()"> Boat Cruise</label>
+                        <label><input type="checkbox" onchange="filterCards()"> Hiking</label>
+                        <label><input type="checkbox" onchange="filterCards()"> White Water Rafting</label>
+                    </div>
 
-        <div class="filter-group">
-          <h4>Budget Range</h4>
-          <select id="priceFilter" onchange="filterCards()">
+                    <div class="filter-group">
+                        <h4>Budget Range</h4>
+                        <select id="priceFilter" onchange="filterCards()">
             <option value="all">Any budget</option>
             <option value="low">Under $250</option>
             <option value="mid">$250 – $500</option>
             <option value="high">$500+</option>
           </select>
+                    </div>
+
+                    <a href="destinations.html" class="btn btn-block" style="margin-top:0.5rem;">
+                        <i class="fas fa-sync-alt"></i> Reset Filters
+                    </a>
+                </aside>
+
+                <!-- Cards -->
+                <div class="results-grid">
+                    <p id="destinationCount" style="margin-bottom:1.5rem; color:var(--text-soft); font-size:0.9rem;"><strong style="color:var(--forest);">6 destinations</strong> found</p>
+                    <div class="card-grid" id="destinationGrid">
+
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/bwindi1.jpg" alt="Bwindi">
+                                <span class="card-badge">Most Popular</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Western Uganda · Gorilla Trekking</div>
+                                <div class="card-title">Bwindi Impenetrable NP</div>
+                                <div class="card-desc">Home to nearly half the world's mountain gorillas. A UNESCO World Heritage Site deep in ancient rainforest.</div>
+                                <div class="card-footer">
+                                    <div class="price">From $500 <small>per person</small></div>
+                                    <a href="attraction.html" class="btn btn-sm">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/murchison-falls.jpg" alt="Murchison Falls">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Northern Uganda · Boat Cruise</div>
+                                <div class="card-title">Murchison Falls NP</div>
+                                <div class="card-desc">The world's most powerful waterfall. Boat cruise to the base, game drives with elephants, lions, and giraffes.</div>
+                                <div class="card-footer">
+                                    <div class="price">From $350 <small>per person</small></div>
+                                    <a href="attraction.html" class="btn btn-sm">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/River-Nile-Source.jpg" alt="Jinja">
+                                <span class="card-badge green">Adventure</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Eastern Uganda · Rafting</div>
+                                <div class="card-title">Jinja — Source of the Nile</div>
+                                <div class="card-desc">The birthplace of the Nile. Thrilling white-water rafting, bungee jumping, kayaking, and sunset boat rides.</div>
+                                <div class="card-footer">
+                                    <div class="price">From $200 <small>per person</small></div>
+                                    <a href="attraction.html" class="btn btn-sm">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/lake-bunyonyi-uganda.jpg" alt="Lake Bunyonyi">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Western Uganda · Boat Cruise</div>
+                                <div class="card-title">Lake Bunyonyi</div>
+                                <div class="card-desc">Africa's deepest lake dotted with 29 islands. Perfect for island-hopping, canoeing, and peaceful relaxation.</div>
+                                <div class="card-footer">
+                                    <div class="price">From $150 <small>per person</small></div>
+                                    <a href="booking.html" class="btn btn-sm">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/safari-elizabeth-1.jpg" alt="Queen Elizabeth">
+                                <span class="card-badge">Top Rated</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Western Uganda · Wildlife Safari</div>
+                                <div class="card-title">Queen Elizabeth NP</div>
+                                <div class="card-desc">Famous for tree-climbing lions, the Kazinga channel boat cruise, and incredible biodiversity across savannah and jungle.</div>
+                                <div class="card-footer">
+                                    <div class="price">From $400 <small>per person</small></div>
+                                    <a href="booking.html" class="btn btn-sm">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/kidepo1.jpeg" alt="Kidepo Valley">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Northern Uganda · Wildlife Safari</div>
+                                <div class="card-title">Kidepo Valley NP</div>
+                                <div class="card-desc">Uganda's most remote wilderness. Zebras, cheetahs, ostriches, and the spectacular Karamojong cultural experience.</div>
+                                <div class="card-footer">
+                                    <div class="price">From $450 <small>per person</small></div>
+                                    <a href="booking.html" class="btn btn-sm">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <a href="destinations.html" class="btn btn-block" style="margin-top:0.5rem;">
-          <i class="fas fa-sync-alt"></i> Reset Filters
-        </a>
-      </aside>
-
-      <!-- Cards -->
-      <div class="results-grid">
-        <p id="destinationCount" style="margin-bottom:1.5rem; color:var(--text-soft); font-size:0.9rem;"><strong style="color:var(--forest);">6 destinations</strong> found</p>
-        <div class="card-grid" id="destinationGrid">
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80" alt="Bwindi">
-              <span class="card-badge">Most Popular</span>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><i class="fas fa-paw"></i>
+                        <div>Pearl Safari<span style="color:rgba(255,255,255,0.6)">Uganda</span></div>
+                    </div>
+                    <p>Your trusted local tour operator for gorilla trekking, wildlife safaris, and authentic Ugandan experiences.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:+256700123456"><i class="fas fa-phone"></i> +256 700 123 456</a></li>
+                        <li><a href="mailto:info@pearlsafari.ug"><i class="fas fa-envelope"></i> info@pearlsafari.ug</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Office Hours</h4>
+                    <ul>
+                        <li>Mon – Sat: 8am – 6pm</li>
+                        <li>Sunday: 9am – 3pm</li>
+                        <li>EAT (East Africa Time)</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card-body">
-              <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Western Uganda · Gorilla Trekking</div>
-              <div class="card-title">Bwindi Impenetrable NP</div>
-              <div class="card-desc">Home to nearly half the world's mountain gorillas. A UNESCO World Heritage Site deep in ancient rainforest.</div>
-              <div class="card-footer">
-                <div class="price">From $500 <small>per person</small></div>
-                <a href="attraction.html" class="btn btn-sm">Book Now</a>
-              </div>
+            <div class="footer-bottom">
+                <p>© 2025 Pearl Safari Uganda. All rights reserved.</p>
             </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80" alt="Murchison Falls">
-            </div>
-            <div class="card-body">
-              <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Northern Uganda · Boat Cruise</div>
-              <div class="card-title">Murchison Falls NP</div>
-              <div class="card-desc">The world's most powerful waterfall. Boat cruise to the base, game drives with elephants, lions, and giraffes.</div>
-              <div class="card-footer">
-                <div class="price">From $350 <small>per person</small></div>
-                <a href="attraction.html" class="btn btn-sm">Book Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://images.unsplash.com/photo-1572204097183-e1ab140342ed?w=600&q=80" alt="Jinja">
-              <span class="card-badge green">Adventure</span>
-            </div>
-            <div class="card-body">
-              <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Eastern Uganda · Rafting</div>
-              <div class="card-title">Jinja — Source of the Nile</div>
-              <div class="card-desc">The birthplace of the Nile. Thrilling white-water rafting, bungee jumping, kayaking, and sunset boat rides.</div>
-              <div class="card-footer">
-                <div class="price">From $200 <small>per person</small></div>
-                <a href="attraction.html" class="btn btn-sm">Book Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://images.unsplash.com/photo-1590686436287-a44f0a2b9491?w=600&q=80" alt="Lake Bunyonyi">
-            </div>
-            <div class="card-body">
-              <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Western Uganda · Boat Cruise</div>
-              <div class="card-title">Lake Bunyonyi</div>
-              <div class="card-desc">Africa's deepest lake dotted with 29 islands. Perfect for island-hopping, canoeing, and peaceful relaxation.</div>
-              <div class="card-footer">
-                <div class="price">From $150 <small>per person</small></div>
-                <a href="booking.html" class="btn btn-sm">Book Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=600&q=80" alt="Queen Elizabeth">
-              <span class="card-badge">Top Rated</span>
-            </div>
-            <div class="card-body">
-              <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Western Uganda · Wildlife Safari</div>
-              <div class="card-title">Queen Elizabeth NP</div>
-              <div class="card-desc">Famous for tree-climbing lions, the Kazinga channel boat cruise, and incredible biodiversity across savannah and jungle.</div>
-              <div class="card-footer">
-                <div class="price">From $400 <small>per person</small></div>
-                <a href="booking.html" class="btn btn-sm">Book Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-img">
-              <img src="https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&q=80" alt="Kidepo Valley">
-            </div>
-            <div class="card-body">
-              <div class="card-meta"><i class="fas fa-map-marker-alt"></i> Northern Uganda · Wildlife Safari</div>
-              <div class="card-title">Kidepo Valley NP</div>
-              <div class="card-desc">Uganda's most remote wilderness. Zebras, cheetahs, ostriches, and the spectacular Karamojong cultural experience.</div>
-              <div class="card-footer">
-                <div class="price">From $450 <small>per person</small></div>
-                <a href="booking.html" class="btn btn-sm">Book Now</a>
-              </div>
-            </div>
-          </div>
-
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </footer>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span style="color:rgba(255,255,255,0.6)">Uganda</span></div></div>
-        <p>Your trusted local tour operator for gorilla trekking, wildlife safaris, and authentic Ugandan experiences.</p>
-        <div class="footer-social">
-          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
-        </div>
-      </div>
-      <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="packages.html">Packages</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+256700123456"><i class="fas fa-phone"></i> +256 700 123 456</a></li><li><a href="mailto:info@pearlsafari.ug"><i class="fas fa-envelope"></i> info@pearlsafari.ug</a></li></ul></div>
-      <div class="footer-col"><h4>Office Hours</h4><ul><li>Mon – Sat: 8am – 6pm</li><li>Sunday: 9am – 3pm</li><li>EAT (East Africa Time)</li></ul></div>
-    </div>
-    <div class="footer-bottom"><p>© 2025 Pearl Safari Uganda. All rights reserved.</p></div>
-  </div>
-</footer>
+    <script>
+        // Note: API_BASE is now dynamically loaded from api-config.js (see <head>)
+        // Uses window.API_BASE which is initialized asynchronously
+        const destinationImages = {
+            'bwindi-impenetrable-national-park': 'images/bwindi1.jpg',
+            'murchison-falls-national-park': 'images/murchison-falls.jpg',
+            'jinja-source-of-the-nile': 'images/River-Nile-Source.jpg',
+            'queen-elizabeth-national-park': 'images/safari-elizabeth-1.jpg',
+            'lake-bunyonyi': 'images/lake-bunyonyi-uganda.jpg',
+            'kidepo-valley-national-park': 'images/kidepo1.jpeg'
+        };
 
-<script>
-// Note: API_BASE is now dynamically loaded from api-config.js (see <head>)
-// Uses window.API_BASE which is initialized asynchronously
-const destinationImages = {
-  'bwindi-impenetrable-national-park': 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80',
-  'murchison-falls-national-park': 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
-  'jinja-source-of-the-nile': 'https://images.unsplash.com/photo-1572204097183-e1ab140342ed?w=600&q=80',
-  'queen-elizabeth-national-park': 'https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=600&q=80',
-  'lake-bunyonyi': 'https://images.unsplash.com/photo-1590686436287-a44f0a2b9491?w=600&q=80',
-  'kidepo-valley-national-park': 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&q=80'
-};
+        function toggleNav() {
+            document.getElementById('mainNav').classList.toggle('open');
+        }
 
-function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
-function filterCards() { /* Filter is visual UX — cards remain shown */ }
+        function filterCards() { /* Filter is visual UX — cards remain shown */ }
 
-function setupAuthCta() {
-  const authCta = document.getElementById('authCta');
-  const token = localStorage.getItem('authToken');
-  if (!authCta) return;
-  if (!token) return;
+        function setupAuthCta() {
+            const authCta = document.getElementById('authCta');
+            const token = localStorage.getItem('authToken');
+            if (!authCta) return;
+            if (!token) return;
 
-  authCta.innerHTML = '<i class="fas fa-calendar-check"></i> My Bookings';
-  authCta.href = 'my-bookings.html';
+            authCta.innerHTML = '<i class="fas fa-calendar-check"></i> My Bookings';
+            authCta.href = 'my-bookings.html';
 
-  if (document.getElementById('logoutNavLink')) return;
-  const logoutLink = document.createElement('a');
-  logoutLink.id = 'logoutNavLink';
-  logoutLink.href = '#';
-  logoutLink.className = 'nav-cta';
-  logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-  logoutLink.addEventListener('click', (event) => {
-    event.preventDefault();
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('currentBookingId');
-    localStorage.removeItem('currentBookingAmount');
-    localStorage.removeItem('currentPaymentMethod');
-    localStorage.removeItem('currentBookingReference');
-    window.location.href = 'index.html';
-  });
-  document.getElementById('mainNav').appendChild(logoutLink);
-}
+            if (document.getElementById('logoutNavLink')) return;
+            const logoutLink = document.createElement('a');
+            logoutLink.id = 'logoutNavLink';
+            logoutLink.href = '#';
+            logoutLink.className = 'nav-cta';
+            logoutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+            logoutLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('currentBookingId');
+                localStorage.removeItem('currentBookingAmount');
+                localStorage.removeItem('currentPaymentMethod');
+                localStorage.removeItem('currentBookingReference');
+                window.location.href = 'index.html';
+            });
+            document.getElementById('mainNav').appendChild(logoutLink);
+        }
 
-function renderDestinations(destinations) {
-  const grid = document.getElementById('destinationGrid');
-  const count = document.getElementById('destinationCount');
-  if (!grid || !count) return;
+        function renderDestinations(destinations) {
+            const grid = document.getElementById('destinationGrid');
+            const count = document.getElementById('destinationCount');
+            if (!grid || !count) return;
 
-  if (!destinations.length) {
-    grid.innerHTML = '<p style="color:var(--text-soft);">No destinations available right now.</p>';
-    count.innerHTML = '<strong style="color:var(--forest);">0 destinations</strong> found';
-    return;
-  }
+            if (!destinations.length) {
+                grid.innerHTML = '<p style="color:var(--text-soft);">No destinations available right now.</p>';
+                count.innerHTML = '<strong style="color:var(--forest);">0 destinations</strong> found';
+                return;
+            }
 
-  count.innerHTML = `<strong style="color:var(--forest);">${destinations.length} destinations</strong> found`;
-  grid.innerHTML = destinations.map((destination) => {
-    const image = destinationImages[destination.slug] || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80';
-    return `
+            count.innerHTML = `<strong style="color:var(--forest);">${destinations.length} destinations</strong> found`;
+            grid.innerHTML = destinations.map((destination) => {
+                const image = destinationImages[destination.slug] || 'images/bwindi1.jpg';
+                return `
       <div class="card">
         <div class="card-img">
           <img src="${image}" alt="${destination.name}">
@@ -274,22 +304,23 @@ function renderDestinations(destinations) {
         </div>
       </div>
     `;
-  }).join('');
-}
+            }).join('');
+        }
 
-async function loadDestinations() {
-  try {
-    const response = await fetch(`${window.API_BASE}/destinations`);
-    const data = await response.json();
-    if (!response.ok || !data.destinations) return;
-    renderDestinations(data.destinations);
-  } catch (error) {
-    // Keep static fallback content if API is unavailable.
-  }
-}
+        async function loadDestinations() {
+            try {
+                const response = await fetch(`${window.API_BASE}/destinations`);
+                const data = await response.json();
+                if (!response.ok || !data.destinations) return;
+                renderDestinations(data.destinations);
+            } catch (error) {
+                // Keep static fallback content if API is unavailable.
+            }
+        }
 
-setupAuthCta();
-loadDestinations();
-</script>
+        setupAuthCta();
+        loadDestinations();
+    </script>
 </body>
+
 </html>

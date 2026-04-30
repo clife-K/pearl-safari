@@ -38,7 +38,7 @@
       <!-- Package 1 -->
       <div class="package-card">
         <div class="pkg-img">
-          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80" alt="Gorilla Trek">
+          <img src="images/bwindi1.jpg" alt="Gorilla Trek">
           <div style="position:absolute; top:12px; left:12px; background:var(--gold); color:var(--forest); font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Best Seller</div>
         </div>
         <div class="pkg-body">
@@ -67,7 +67,7 @@
       <!-- Package 2 -->
       <div class="package-card">
         <div class="pkg-img">
-          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80" alt="Murchison Falls">
+          <img src="images/murchison-falls.jpg" alt="Murchison Falls">
         </div>
         <div class="pkg-body">
           <div class="pkg-tags">
@@ -95,7 +95,7 @@
       <!-- Package 3 -->
       <div class="package-card">
         <div class="pkg-img">
-          <img src="https://images.unsplash.com/photo-1572204097183-e1ab140342ed?w=600&q=80" alt="Jinja">
+          <img src="images/River-Nile-Source.jpg" alt="Jinja">
           <div style="position:absolute; top:12px; left:12px; background:var(--forest-light); color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Adventure</div>
         </div>
         <div class="pkg-body">
@@ -124,7 +124,7 @@
       <!-- Package 4 -->
       <div class="package-card">
         <div class="pkg-img">
-          <img src="https://images.unsplash.com/photo-1590686436287-a44f0a2b9491?w=600&q=80" alt="Lake Bunyonyi">
+          <img src="images/lake-bunyonyi-uganda.jpg" alt="Lake Bunyonyi">
           <div style="position:absolute; top:12px; left:12px; background:#c0392b; color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Save 12%</div>
         </div>
         <div class="pkg-body">
@@ -154,7 +154,7 @@
       <!-- Package 5 -->
       <div class="package-card">
         <div class="pkg-img">
-          <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=600&q=80" alt="Western Uganda">
+          <img src="images/safari-elizabeth-1.jpg" alt="Western Uganda">
         </div>
         <div class="pkg-body">
           <div class="pkg-tags">
@@ -182,7 +182,7 @@
       <!-- Package 6 -->
       <div class="package-card">
         <div class="pkg-img">
-          <img src="https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&q=80" alt="Kidepo">
+          <img src="images/kidepo1.jpeg" alt="Kidepo">
           <div style="position:absolute; top:12px; left:12px; background:var(--forest-mid); color:white; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:40px; text-transform:uppercase;">Remote & Exclusive</div>
         </div>
         <div class="pkg-body">
@@ -234,12 +234,12 @@
 <script>
 const API_BASE = 'http://localhost:5000/api';
 const packageImages = {
-  'gorilla-expedition-bwindi': 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80',
-  'murchison-falls-safari': 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
-  'jinja-adventure-weekend': 'https://images.unsplash.com/photo-1572204097183-e1ab140342ed?w=600&q=80',
-  'gorillas-and-lakes-explorer': 'https://images.unsplash.com/photo-1590686436287-a44f0a2b9491?w=600&q=80',
-  'western-uganda-grand-safari': 'https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?w=600&q=80',
-  'kidepo-valley-wilderness': 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=600&q=80'
+  'gorilla-expedition-bwindi': 'images/bwindi1.jpg',
+  'murchison-falls-safari': 'images/murchison-falls.jpg',
+  'jinja-adventure-weekend': 'images/River-Nile-Source.jpg',
+  'gorillas-and-lakes-explorer': 'images/lake-bunyonyi-uganda.jpg',
+  'western-uganda-grand-safari': 'images/safari-elizabeth-1.jpg',
+  'kidepo-valley-wilderness': 'images/kidepo1.jpeg'
 };
 
 function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
@@ -277,7 +277,7 @@ function renderPackages(packages) {
   if (!packageList || !packages.length) return;
 
   packageList.innerHTML = packages.map((pkg) => {
-    const image = packageImages[pkg.slug] || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80';
+    const image = packageImages[pkg.slug] || 'images/bwindi1.jpg';
     const region = pkg.destination?.region || pkg.destination?.country || 'Uganda';
     const price = Number(pkg.basePrice || 0).toLocaleString();
 

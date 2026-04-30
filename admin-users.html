@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users Management | Pearl Safari Uganda Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --forest: #2d543a; --forest-light: #4a7c59; --forest-mid: #1f3d2a;
+      --gold: #d4af37; --cream: #fdf9f3; --cream-dark: #f5ede3;
+      --text-main: #2a2a2a; --text-soft: #666; --white: #ffffff;
+      --danger: #e74c3c; --success: #27ae60;
+      --radius-md: 8px; --radius-lg: 12px;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1); --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+    body { font-family: 'DM Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-main); }
+    .admin-layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+    .admin-sidebar { background: var(--forest); color: white; padding: 2rem 0; position: fixed; left: 0; top: 0; width: 280px; height: 100vh; overflow-y: auto; box-shadow: var(--shadow-lg); z-index: 1000; }
+    .admin-logo { padding: 0 1.5rem 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; gap: 0.75rem; font-size: 1.3rem; font-weight: 700; }
+    .admin-nav-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: rgba(255, 255, 255, 0.7); cursor: pointer; transition: all 0.3s; text-decoration: none; }
+    .admin-nav-item:hover, .admin-nav-item.active { background: rgba(255, 255, 255, 0.1); color: var(--gold); }
+    .admin-nav-item i { width: 24px; text-align: center; }
+    .admin-nav-label { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); padding: 1rem 1.5rem 0.5rem; text-transform: uppercase; font-weight: 600; }
+    .admin-logout { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .admin-main { margin-left: 280px; padding: 2rem; background: var(--cream); }
+    .admin-header { background: white; padding: 1.5rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); margin-bottom: 2rem; }
+    .admin-header h1 { font-size: 1.8rem; color: var(--forest); margin-bottom: 1rem; }
+    .filter-bar { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .filter-bar select { padding: 0.75rem; border: 2px solid var(--cream-dark); border-radius: var(--radius-md); font-size: 0.9rem; }
+    .section-card { background: white; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .section-title { font-size: 1.3rem; color: var(--forest); margin-bottom: 1.5rem; }
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: var(--cream-dark); padding: 1rem; text-align: left; font-weight: 600; color: var(--forest); font-size: 0.9rem; }
+    td { padding: 1rem; border-bottom: 1px solid var(--cream-dark); }
+    tr:hover { background: var(--cream); }
+    .role-badge { display: inline-block; padding: 0.3rem 0.7rem; border-radius: 15px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .role-admin { background: #fff3cd; color: #856404; }
+    .role-staff { background: #cfe2ff; color: #084298; }
+    .role-customer { background: #e2e3e5; color: #383d41; }
+    .status-active { color: var(--success); }
+    .status-inactive { color: var(--danger); }
+    .action-buttons { display: flex; gap: 0.5rem; }
+    .btn-small { padding: 0.5rem 1rem; background: var(--forest); color: white; border: none; border-radius: var(--radius-md); cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+    .btn-small:hover { background: var(--forest-mid); }
+    .btn-danger { background: var(--danger); }
+    .btn-danger:hover { background: #c0392b; }
+    .btn-logout { background: var(--danger); }
+    .btn-logout:hover { background: #c0392b; }
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
+    .modal-content { background-color: white; margin: 5% auto; padding: 2rem; border-radius: var(--radius-lg); width: 90%; max-width: 500px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 2px solid var(--cream-dark); padding-bottom: 1rem; }
+    .modal-header h2 { color: var(--forest); }
+    .close { color: var(--text-soft); font-size: 28px; font-weight: bold; cursor: pointer; }
+    .close:hover { color: var(--text-main); }
+    .modal-body { margin-bottom: 1.5rem; }
+    .modal-footer { display: flex; gap: 1rem; justify-content: flex-end; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; color: var(--forest); font-weight: 600; }
+    .form-group select { width: 100%; padding: 0.75rem; border: 2px solid var(--cream-dark); border-radius: var(--radius-md); }
+    @media (max-width: 768px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { width: 100%; height: auto; position: relative; }
+      .admin-main { margin-left: 0; }
+      .action-buttons { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <div class="admin-sidebar">
+    <div class="admin-logo"><i class="fas fa-paw"></i>Pearl Safari</div>
+    <div class="admin-nav-label">Main</div>
+    <a href="admin-dashboard.html" class="admin-nav-item"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
+    <div class="admin-nav-label">Manage</div>
+    <a href="admin-bookings.html" class="admin-nav-item"><i class="fas fa-calendar-check"></i><span>Bookings</span></a>
+    <a href="admin-payments.html" class="admin-nav-item"><i class="fas fa-credit-card"></i><span>Payments</span></a>
+    <a href="admin-messages.html" class="admin-nav-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+    <a href="admin-users.html" class="admin-nav-item active"><i class="fas fa-users"></i><span>Users</span></a>
+    <div class="admin-nav-label">Settings</div>
+    <div class="admin-nav-item admin-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></div>
+  </div>
+
+  <div class="admin-main">
+    <div class="admin-header">
+      <h1><i class="fas fa-users"></i> Users Management</h1>
+      <div class="filter-bar">
+        <select id="roleFilter" onchange="loadUsers()">
+          <option value="">All Roles</option>
+          <option value="ADMIN">Admins</option>
+          <option value="STAFF">Staff</option>
+          <option value="CUSTOMER">Customers</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title"><i class="fas fa-list"></i> All Users</div>
+      <div class="table-responsive">
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Bookings</th>
+              <th>Last Login</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="8" style="text-align: center; padding: 2rem;">Loading users...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="roleModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Update User Role</h2>
+      <span class="close" onclick="closeRoleModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>New Role</label>
+        <select id="newRole">
+          <option value="CUSTOMER">Customer</option>
+          <option value="STAFF">Staff</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-small" onclick="closeRoleModal()">Cancel</button>
+      <button class="btn-small" style="background: var(--success);" onclick="updateUserRole()">Update</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_BASE = 'http://localhost:5000/api';
+  let currentUserId = null;
+
+  function checkAuth() {
+    if (!localStorage.getItem('adminToken')) window.location.href = 'admin-login.html';
+  }
+
+  async function loadUsers() {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const role = document.getElementById('roleFilter').value;
+      let url = `${API_BASE}/admin/users?skip=0&take=50`;
+      if (role) url += `&role=${role}`;
+
+      const response = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) window.location.href = 'admin-login.html';
+        throw new Error('Failed');
+      }
+
+      const data = await response.json();
+      updateUsersTable(data.users);
+    } catch (error) {
+      alert('Failed to load users');
+    }
+  }
+
+  function updateUsersTable(users) {
+    const tbody = document.querySelector('#usersTable tbody');
+    if (!users || users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">No users found</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = users.map(user => `
+      <tr>
+        <td><strong>${user.fullName}</strong></td>
+        <td>${user.email}</td>
+        <td>${user.phone || 'N/A'}</td>
+        <td><span class="role-badge role-${user.role.toLowerCase()}">${user.role}</span></td>
+        <td><span class="status-${user.isActive ? 'active' : 'inactive'}">${user.isActive ? 'Active' : 'Inactive'}</span></td>
+        <td>${user._count.bookings}</td>
+        <td>${user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn-small" onclick="openRoleModal(${user.id})">Edit Role</button>
+            <button class="btn-small" onclick="toggleUserStatus(${user.id}, ${!user.isActive})">${user.isActive ? 'Disable' : 'Enable'}</button>
+            <button class="btn-small btn-danger" onclick="deleteUser(${user.id})">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function openRoleModal(userId) {
+    currentUserId = userId;
+    document.getElementById('roleModal').style.display = 'block';
+  }
+
+  async function updateUserRole() {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const role = document.getElementById('newRole').value;
+      await fetch(`${API_BASE}/admin/users/${currentUserId}/role`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role })
+      });
+      alert('Role updated');
+      closeRoleModal();
+      loadUsers();
+    } catch (error) {
+      alert('Failed');
+    }
+  }
+
+  async function toggleUserStatus(userId, isActive) {
+    try {
+      const token = localStorage.getItem('adminToken');
+      await fetch(`${API_BASE}/admin/users/${userId}/status`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive })
+      });
+      alert(isActive ? 'User activated' : 'User disabled');
+      loadUsers();
+    } catch (error) {
+      alert('Failed');
+    }
+  }
+
+  async function deleteUser(userId) {
+    if (!confirm('Delete this user?')) return;
+    try {
+      const token = localStorage.getItem('adminToken');
+      await fetch(`${API_BASE}/admin/users/${userId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      alert('User deleted');
+      loadUsers();
+    } catch (error) {
+      alert('Failed');
+    }
+  }
+
+  function closeRoleModal() {
+    document.getElementById('roleModal').style.display = 'none';
+  }
+
+  function logout() {
+    if (confirm('Logout?')) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      window.location.href = 'admin-login.html';
+    }
+  }
+
+  window.onclick = (e) => {
+    if (e.target.id === 'roleModal') document.getElementById('roleModal').style.display = 'none';
+  }
+
+  checkAuth();
+  loadUsers();
+</script>
+
+</body>
+</html>
