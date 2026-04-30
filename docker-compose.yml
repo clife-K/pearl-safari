@@ -27,7 +27,7 @@ services:
       DATABASE_URL: postgresql://pearl_user:pearl_password_123@db:5432/pearl_safari_db
       PORT: 3000
       JWT_SECRET: pearl-safari-secret-dev
-      FRONTEND_URL: http://localhost:3000
+      FRONTEND_URL: http://localhost:3000,http://127.0.0.1:3000
     ports:
       - "3000:3000"
     depends_on:

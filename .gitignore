@@ -30,16 +30,12 @@ logs/
 *.db
 *.sqlite
 
-# Ignore ad-hoc SQL dumps, but keep Prisma migrations + bundled SQL helpers tracked
+# Ignore loose SQL dumps; keep Prisma migrations only
 *.sql
 !backend/prisma/migrations/**/migration.sql
-!backend/prisma/init.sql
-!backend/create-admin.sql
-!backend/update-admin-password.sql
 
 # OS
 Thumbs.db
-.DS_Store
 
 # Temporary
 tmp/

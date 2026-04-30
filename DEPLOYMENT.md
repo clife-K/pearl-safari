@@ -12,50 +12,39 @@ This is a full-stack e-commerce travel booking application:
 ## 🚀 Quick Start - Local Development
 
 ### Prerequisites
-- Node.js 16+ 
-- PostgreSQL 12+
-- npm or yarn
+- Node.js **20.19+** (22 LTS recommended)
+- PostgreSQL 14+
+- npm
 
-### Setup Backend
+### Setup
 
 ```bash
-cd backend
-npm install
-
-# Create PostgreSQL database
 createdb pearl_safari_db
 
-# Initialize database with Prisma
+cd backend
+npm install
+npx prisma migrate deploy
 npm run seed
+npm run dev
 ```
 
 ### Environment Configuration
-Edit `backend/.env`:
+Edit `backend/.env` (copy from `backend/.env.example`):
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/pearl_safari_db"
 PORT=5000
 JWT_SECRET="your-secret-key-here"
 NODE_ENV=development
-FRONTEND_URL="http://localhost:3000"
+FRONTEND_URL="http://localhost:5000,http://localhost:3000"
 ```
 
 ### Run Locally
-```bash
-# Terminal 1 - Backend
-cd backend
-npm run dev
 
-# Terminal 2 - Frontend (use any http server)
-# Option A: Python
-python -m http.server 3000
+One server serves **`frontend/`** and **`/api`**:
 
-# Option B: Node.js (http-server)
-npx http-server -p 3000
+Access at: **`http://localhost:5000`**
 
-# Option C: VS Code Live Server extension
-```
-
-Access at: `http://localhost:3000`
+Optional split: keep API on port 5000 and serve **`frontend/`** with another static server on port 3000 (`api-config.js` maps localhost:3000 → API :5000).
 
 ---
 

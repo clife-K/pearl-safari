@@ -31,7 +31,7 @@ const prisma = new PrismaClient({ adapter });
 
 // ═══════════════ MIDDLEWARE ═══════════════
 // Supports one or many origins via FRONTEND_URL (comma-separated).
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:3000")
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:3000,http://localhost:5000,http://127.0.0.1:5000")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
@@ -54,7 +54,8 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../')));
+
+const FRONTEND_DIR = path.join(__dirname, "../frontend");
 
 // Store prisma and JWT_SECRET in app.locals for admin routes
 app.locals.prisma = prisma;
@@ -357,8 +358,14 @@ app.post("/api/contacts", async(req, res) => {
 // ═══════════════ ADMIN ROUTES ═══════════════
 app.use("/api/admin", adminRoutes);
 
+// Static site (after /api routes) — index.html is served for /
+app.use(express.static(FRONTEND_DIR));
+
 app.use((req, res) => {
-    res.status(404).json({ message: "Route not found." });
+    if (req.path.startsWith("/api")) {
+        return res.status(404).json({ message: "Route not found." });
+    }
+    return res.status(404).type("text").send("Not found");
 });
 
 app.listen(PORT, () => {

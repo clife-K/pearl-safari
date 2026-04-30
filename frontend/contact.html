@@ -6,6 +6,7 @@
   <title>Contact Us | Pearl Safari Uganda</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="api-config.js"></script>
 </head>
 <body>
 <header>
@@ -45,24 +46,24 @@
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
               <div class="form-field">
                 <label>First Name *</label>
-                <input type="text" required placeholder="Sarah">
+                <input name="firstName" type="text" required placeholder="Sarah">
               </div>
               <div class="form-field">
                 <label>Last Name *</label>
-                <input type="text" required placeholder="Mukasa">
+                <input name="lastName" type="text" required placeholder="Mukasa">
               </div>
             </div>
             <div class="form-field">
               <label>Email Address *</label>
-              <input type="email" required placeholder="sarah@example.com">
+              <input name="email" type="email" required placeholder="sarah@example.com">
             </div>
             <div class="form-field">
               <label>WhatsApp / Phone</label>
-              <input type="tel" placeholder="+256 7XX XXX XXX">
+              <input name="phone" type="tel" placeholder="+256 7XX XXX XXX">
             </div>
             <div class="form-field">
               <label>I'm interested in…</label>
-              <select>
+              <select name="subject">
                 <option>Gorilla Trekking</option>
                 <option>Wildlife Safari</option>
                 <option>Jinja Adventure</option>
@@ -72,7 +73,7 @@
             </div>
             <div class="form-field">
               <label>Message *</label>
-              <textarea required rows="5" placeholder="Tell us about your dream Uganda experience — dates, group size, budget…"></textarea>
+              <textarea name="message" required rows="5" placeholder="Tell us about your dream Uganda experience — dates, group size, budget…"></textarea>
             </div>
             <button type="submit" class="btn btn-block btn-lg">
               <i class="fas fa-paper-plane"></i> Send Message
@@ -155,10 +156,34 @@
 
 <script>
 function toggleNav() { document.getElementById('mainNav').classList.toggle('open'); }
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
+  const form = document.getElementById('contactForm');
+  const fd = new FormData(form);
+  const firstName = (fd.get('firstName') || '').trim();
+  const lastName = (fd.get('lastName') || '').trim();
+  const payload = {
+    fullName: `${firstName} ${lastName}`.trim(),
+    email: (fd.get('email') || '').trim(),
+    phone: (fd.get('phone') || '').trim() || null,
+    subject: form.querySelector('select[name="subject"]').selectedOptions[0].textContent.trim(),
+    message: (fd.get('message') || '').trim(),
+  };
+  try {
+    const res = await fetch(`${window.API_BASE}/contacts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.message || 'Request failed');
+    }
+    form.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  } catch (err) {
+    alert(err.message || 'Could not send message. Check your connection and try again.');
+  }
 }
 </script>
 </body>

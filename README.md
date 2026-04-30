@@ -31,50 +31,48 @@ A premium e-commerce platform for booking wildlife safaris and travel experience
 
 ```
 E-commerce/
-├── frontend files (HTML, CSS, JS)
+├── frontend/              # Static site (HTML, CSS, JS)
+│   └── images/            # Optional local safari photos (.gitkeep only until you add files)
 ├── backend/
-│   ├── server.js          # Main Express server
-│   ├── package.json       # Dependencies
-│   ├── .env              # Environment config
+│   ├── server.js          # Express API + serves frontend/
+│   ├── routes/            # Admin API routes
+│   ├── resolve-database-url.cjs
+│   ├── prisma.config.ts
 │   └── prisma/
-│       ├── schema.prisma # Database schema
-│       └── migrations/   # DB migrations
-├── DEPLOYMENT.md         # Deployment guide
-├── docker-compose.yml    # Docker setup
-└── Dockerfile           # Container image
+│       ├── schema.prisma
+│       └── migrations/
+├── railway-web-vars.txt   # Starter Railway variables (copy into dashboard)
+├── DEPLOYMENT.md
+├── docker-compose.yml
+├── Dockerfile
+└── railway.json
 ```
 
 ## Quick Start
 
 ### Local Development
 
-**Prerequisites**: Node.js 16+, PostgreSQL 12+
+**Prerequisites**: Node.js **20.19+** (22 LTS recommended), PostgreSQL 14+
 
 ```bash
-# 1. Install backend dependencies
-cd backend
-npm install
-
-# 2. Create PostgreSQL database
+# 1. Create DB & configure backend/.env (copy from backend/.env.example)
 createdb pearl_safari_db
 
-# 3. Configure environment
-# Edit backend/.env with your database URL
-
-# 4. Initialize database
+# 2. Install, migrate, seed, run (single process serves UI + API)
+cd backend
+npm install
+npx prisma migrate deploy
 npm run seed
-
-# 5. Start backend (Terminal 1)
 npm run dev
-
-# 6. Start frontend (Terminal 2)
-# Use any HTTP server:
-python -m http.server 3000
-# or
-npx http-server -p 3000
 ```
 
-Access at: `http://localhost:3000`
+Open **`http://localhost:5000`** (same server powers `/api` and the pages under **`frontend/`**).
+
+**Optional split dev**: serve only API from `backend` and open `frontend/` with another static server on port 3000 (`api-config.js` maps localhost:3000 → API :5000).
+
+### Safari photos
+
+Place JPG/JPEG files referenced in pages under **`frontend/images/`** (see `<img src="images/...">` in HTML). Until then, some thumbnails may 404; the site still runs.
 
 ## API Endpoints
 
@@ -119,9 +117,9 @@ FRONTEND_URL=http://localhost:3000
 2. Go to [railway.app](https://railway.app)
 3. Create new project, connect repo
 4. Add **PostgreSQL** in the **same project**
-5. Open your **web / Docker application service** (not Postgres) → **Variables**, and assign **`DATABASE_URL`** by referencing the Postgres service (**`${{ Postgres.DATABASE_URL }}`** — pick the exact service name Railway shows after typing `${{` in autocomplete). Optionally paste the starter block from **`railway-web-vars.txt`** and set **`JWT_SECRET`**. Deploy.
+5. On your **Web / Docker service** → **Variables** → Raw Editor: paste **`railway-web-vars.txt`**, then fix **`DATABASE_URL`** using Railway’s variable reference / autocomplete so it points at **your** Postgres tile (slug may not be `Postgres`). Set **`JWT_SECRET`**. Deploy.
 
-**If deployments loop with “DATABASE_URL is not available”, the web service does not yet have Postgres variables — step 5 is mandatory.** Railway runs in the cloud; your laptop can be off afterward.
+**If deployments loop with “DATABASE_URL is not available”, Postgres variables are not referenced on the web service yet.**
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed guides for:
 - Railway
