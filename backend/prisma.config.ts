@@ -1,24 +1,26 @@
 import dotenv from "dotenv";
 import fs from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "prisma/config";
+
+const require = createRequire(import.meta.url);
+const { resolveDatabaseUrl } = require("./resolve-database-url.cjs");
 
 const currentFile = fileURLToPath(import.meta.url);
 const currentDir = path.dirname(currentFile);
 const envPath = path.resolve(currentDir, ".env");
 
-// Local dev: load `.env`. Production (Railway, Docker): only `process.env` — no `.env` file.
-let databaseUrl = process.env.DATABASE_URL;
+// Local dev: load `.env`. Production (Railway): env is injected — link Postgres vars to your web service.
 if (fs.existsSync(envPath)) {
     dotenv.config({ path: envPath, override: true });
-    const envFromFile = dotenv.parse(fs.readFileSync(envPath));
-    databaseUrl = envFromFile.DATABASE_URL || process.env.DATABASE_URL;
 }
 
+const databaseUrl = resolveDatabaseUrl();
 if (!databaseUrl) {
     throw new Error(
-        "DATABASE_URL is missing. Attach PostgreSQL in Railway or set DATABASE_URL.",
+        "DATABASE_URL is not available. In Railway: select your Postgres service → use “Variable Reference” to expose DATABASE_PUBLIC_URL or DATABASE_URL to your web service (or paste DATABASE_URL under the web app Variables tab).",
     );
 }
 

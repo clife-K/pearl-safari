@@ -10,8 +10,18 @@ const { PrismaClient, BookingStatus, PaymentStatus, CurrencyCode } = require("@p
 
 dotenv.config();
 
+const { resolveDatabaseUrl } = require("./resolve-database-url.cjs");
+const databaseUrl = resolveDatabaseUrl();
+if (!databaseUrl) {
+    console.error(
+        "[Startup] DATABASE_URL is missing on this service. In Railway: open your Postgres plugin → Variables → copy DATABASE_URL, or use “Reference variable” from Postgres → DATABASE_URL on your web service.",
+    );
+    process.exit(1);
+}
+process.env.DATABASE_URL = databaseUrl;
+
 const app = express();
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString: databaseUrl });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 

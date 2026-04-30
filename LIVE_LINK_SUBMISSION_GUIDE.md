@@ -34,16 +34,24 @@ This avoids CORS and cross-domain issues.
 
 1. Go to [https://railway.app](https://railway.app)
 2. New Project -> Deploy from GitHub repo
-3. Add PostgreSQL service to same project
-4. Open app service -> Variables and set:
+3. Add **PostgreSQL** to the **same project** as your web app
+4. **Critical — attach the database URL to your web service** (otherwise containers start with **no `DATABASE_URL`** and crash):
+
+   - Open your **web / Node / Docker service** (not Postgres)
+   - Go to **Variables**
+   - Click **\+ New Variable** → **Variable Reference** (or **Raw Editor** referencing another service — UI label may vary slightly)
+   - Choose your **PostgreSQL** service → add **`DATABASE_URL`** (recommended) _or_ **`DATABASE_PUBLIC_URL`**
+   - Save (Railway redeploys)
+
+   If reference is unavailable: copy **`DATABASE_URL`** from the Postgres service **Variables** and paste it manually on your web service as **`DATABASE_URL`**.
+
+5. On the web service → **Variables**, also set:
 
 ```env
 NODE_ENV=production
 JWT_SECRET=put-a-long-random-secret-here
 FRONTEND_URL=https://YOUR-RAILWAY-APP-DOMAIN
 ```
-
-Do not set `DATABASE_URL` manually if Railway already injects it from PostgreSQL service.
 
 ## Step 3: First Deployment Check
 

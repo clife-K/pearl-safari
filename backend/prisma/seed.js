@@ -5,7 +5,15 @@ const { PrismaClient, CurrencyCode } = require("@prisma/client");
 
 dotenv.config();
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const { resolveDatabaseUrl } = require("../resolve-database-url.cjs");
+const databaseUrl = resolveDatabaseUrl();
+if (!databaseUrl) {
+    console.error("DATABASE_URL is missing — set it or reference Postgres vars in Railway.");
+    process.exit(1);
+}
+process.env.DATABASE_URL = databaseUrl;
+
+const pool = new Pool({ connectionString: databaseUrl });
 const prisma = new PrismaClient({ adapter: new PrismaPg(pool) });
 
 const destinations = [
