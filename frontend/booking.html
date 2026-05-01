@@ -29,7 +29,6 @@
     <section class="section-sm">
         <div class="container">
 
-            <!-- Step Indicator -->
             <div class="steps" style="max-width:500px;">
                 <div class="step-item active">
                     <div class="step-num">1</div>
@@ -38,7 +37,7 @@
                 <div class="step-connector"></div>
                 <div class="step-item">
                     <div class="step-num">2</div>
-                    <div class="step-label">Extras</div>
+                    <div class="step-label">Trip</div>
                 </div>
                 <div class="step-connector"></div>
                 <div class="step-item">
@@ -48,86 +47,99 @@
             </div>
 
             <div class="attraction-layout">
-                <!-- Form -->
                 <div style="flex:2;">
                     <div class="booking-form-card">
-                        <div class="form-section-title"><i class="fas fa-user"></i> &nbsp;Traveller Details</div>
+                        <div class="form-section-title"><i class="fas fa-suitcase"></i> &nbsp;Package</div>
+                        <div id="packageRow" class="form-field" style="display:none;">
+                            <label for="packageSelect">Select package *</label>
+                            <select id="packageSelect"></select>
+                        </div>
+                        <p id="packageLockedHint" style="display:none; font-size:0.88rem; color:var(--text-soft); margin:-0.25rem 0 1rem;"></p>
+
+                        <div class="form-section-title" style="margin-top:0.5rem;"><i class="fas fa-calendar-alt"></i> &nbsp;Travel</div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                            <div class="form-field">
+                                <label for="bfTravelDate">Travel start date *</label>
+                                <input type="date" id="bfTravelDate" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="bfAdults">Adults *</label>
+                                <input type="number" id="bfAdults" min="1" max="30" value="1" required>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="bfChildren">Children (charged at half the per-person package rate)</label>
+                            <input type="number" id="bfChildren" min="0" max="30" value="0">
+                        </div>
+
+                        <div class="form-section-title" style="margin-top:1.25rem;"><i class="fas fa-user"></i> &nbsp;Traveller Details</div>
                         <form id="bookingForm" onsubmit="proceedToPayment(event)">
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                                 <div class="form-field">
-                                    <label>First Name *</label>
-                                    <input type="text" required placeholder="John">
+                                    <label for="bfFirstName">First Name *</label>
+                                    <input type="text" id="bfFirstName" required placeholder="John">
                                 </div>
                                 <div class="form-field">
-                                    <label>Last Name *</label>
-                                    <input type="text" required placeholder="Mutesi">
+                                    <label for="bfLastName">Last Name *</label>
+                                    <input type="text" id="bfLastName" required placeholder="Mutesi">
                                 </div>
                             </div>
                             <div class="form-field">
-                                <label>Email Address *</label>
-                                <input type="email" required placeholder="john@example.com">
+                                <label for="bfEmail">Email Address *</label>
+                                <input type="email" id="bfEmail" required placeholder="john@example.com">
                             </div>
                             <div class="form-field">
-                                <label>WhatsApp / Phone *</label>
-                                <input type="tel" required placeholder="+256 700 123 456">
+                                <label for="bfPhone">WhatsApp / Phone *</label>
+                                <input type="tel" id="bfPhone" required placeholder="+256 700 123 456">
                             </div>
                             <div class="form-field">
-                                <label>Nationality</label>
-                                <input type="text" placeholder="e.g., Ugandan, British, American">
+                                <label for="bfNationality">Nationality</label>
+                                <input type="text" id="bfNationality" placeholder="e.g., Ugandan, British, American">
                             </div>
                             <div class="form-field">
-                                <label>Special Requests <span style="color:var(--text-soft); font-weight:400;">(dietary, medical, accessibility needs…)</span></label>
-                                <textarea rows="3" placeholder="E.g., vegetarian meals, need porter for gorilla trek, wheelchair access…"></textarea>
+                                <label for="bfSpecial">Special Requests <span style="color:var(--text-soft); font-weight:400;">(dietary, medical, accessibility…)</span></label>
+                                <textarea id="bfSpecial" rows="3" placeholder="E.g., vegetarian meals, porter for gorilla trek…"></textarea>
                             </div>
 
                             <div class="form-section-title" style="margin-top:1.5rem;"><i class="fas fa-credit-card"></i> &nbsp;Preferred Payment Method</div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem;">
                                 <label style="background:var(--cream); border:2px solid var(--sand); border-radius:var(--radius); padding:1rem; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all 0.2s;" onclick="selectPayment(this)">
-                <input type="radio" name="payment" value="card" style="accent-color:var(--forest);"> <span><strong style="display:block; font-size:0.9rem;">Credit / Debit Card</strong><small style="color:var(--text-soft);">Visa, Mastercard</small></span>
-              </label>
+                                    <input type="radio" name="payment" value="card" style="accent-color:var(--forest);"> <span><strong style="display:block; font-size:0.9rem;">Credit / Debit Card</strong><small style="color:var(--text-soft);">Invoice or payment link from our team</small></span>
+                                </label>
                                 <label style="background:var(--cream); border:2px solid var(--sand); border-radius:var(--radius); padding:1rem; cursor:pointer; display:flex; align-items:center; gap:10px; transition:all 0.2s;" onclick="selectPayment(this)">
-                <input type="radio" name="payment" value="mobile"> <span><strong style="display:block; font-size:0.9rem;">Mobile Money</strong><small style="color:var(--text-soft);">MTN / Airtel Uganda</small></span>
-              </label>
+                                    <input type="radio" name="payment" value="mobile" style="accent-color:var(--forest);"> <span><strong style="display:block; font-size:0.9rem;">Mobile Money</strong><small style="color:var(--text-soft);">MTN / Airtel Uganda</small></span>
+                                </label>
                             </div>
 
                             <button type="submit" class="btn btn-block btn-lg">
-              <i class="fas fa-arrow-right"></i> Proceed to Payment
-            </button>
-                            <p style="text-align:center; font-size:0.82rem; color:var(--text-soft); margin-top:0.75rem;"><i class="fas fa-lock"></i> Your information is encrypted and secure</p>
+                                <i class="fas fa-arrow-right"></i> Proceed to Payment
+                            </button>
+                            <p style="text-align:center; font-size:0.82rem; color:var(--text-soft); margin-top:0.75rem;">Prices follow published package rates. Final confirmation after payment verification.</p>
                         </form>
                     </div>
                 </div>
 
-                <!-- Summary -->
                 <div style="flex:1; min-width:280px;">
                     <div class="booking-card">
                         <h3><i class="fas fa-receipt" style="color:var(--gold);"></i> Booking Summary</h3>
 
                         <div style="background:var(--cream); border-radius:var(--radius); overflow:hidden; margin-bottom:1.25rem;">
-                            <img src="images/bwindi1.jpg" alt="Bwindi" style="width:100%; height:130px; object-fit:cover;">
+                            <img id="summaryImage" src="images/bwindi1.jpg" alt="" style="width:100%; height:130px; object-fit:cover;">
                             <div style="padding:0.75rem;">
-                                <div style="font-weight:700; font-size:0.95rem; color:var(--forest);">Bwindi Gorilla Trek</div>
-                                <div style="font-size:0.85rem; color:var(--text-soft);">3 Days · 2 Adults · Dec 15, 2026</div>
+                                <div id="summaryTitle" style="font-weight:700; font-size:0.95rem; color:var(--forest);">Select a package</div>
+                                <div id="summaryMeta" style="font-size:0.85rem; color:var(--text-soft);">—</div>
                             </div>
                         </div>
 
                         <div class="booking-total">
-                            <div class="line"><span>Base price (2 × $500)</span><span>$1,000</span></div>
-                            <div class="line"><span>Transport from Kampala</span><span>$300</span></div>
-                            <div class="line"><span>Accommodation (standard)</span><span>Included</span></div>
-                            <div class="line total"><span>Total</span><span>$1,300</span></div>
-                        </div>
-
-                        <div class="form-section-title" style="margin:1rem 0 0.5rem;">Have a promo code?</div>
-                        <div class="promo-row">
-                            <input type="text" placeholder="Enter promo code">
-                            <button onclick="showToast('Promo feature is demo-only for now.', 'info'); return false;" class="btn btn-sm btn-forest">Apply</button>
+                            <div class="line"><span id="lineAdultsLabel">Adults (× base rate)</span><span id="lineAdults">—</span></div>
+                            <div class="line" id="lineChildrenRow" style="display:none;"><span>Children (half rate)</span><span id="lineChildren">—</span></div>
+                            <div class="line total"><span>Total (USD)</span><span id="lineTotal">—</span></div>
                         </div>
 
                         <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.6rem;">
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-shield-alt" style="color:var(--forest-light);"></i> Permit guaranteed</div>
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-sync-alt" style="color:var(--forest-light);"></i> Free cancellation 48h before</div>
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-lock" style="color:var(--forest-light);"></i> SSL secure payment</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-info-circle" style="color:var(--forest-light);"></i> Gorilla permits subject to availability</div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-soft);"><i class="fas fa-headset" style="color:var(--forest-light);"></i> We confirm details by email &amp; WhatsApp</div>
                         </div>
                     </div>
 
@@ -147,16 +159,23 @@
     <footer>
         <div class="container">
             <div class="footer-bottom" style="padding-top:0; border:none;">
-                <p style="color:rgba(255,255,255,0.6);">© 2025 Pearl Safari Uganda — Secure Booking</p>
-                <p style="color:rgba(255,255,255,0.4); font-size:0.82rem;"><i class="fas fa-lock"></i> SSL Encrypted · Your data is safe</p>
+                <p style="color:rgba(255,255,255,0.6);">© 2026 Pearl Safari Uganda</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Note: API_BASE is now dynamically loaded from api-config.js (see <head>)
-        // Uses window.API_BASE which is initialized asynchronously
-        const BOOKING_TOTAL = 1300;
+        const packageImages = {
+            'gorilla-expedition-bwindi': 'images/bwindi1.jpg',
+            'murchison-falls-safari': 'images/murchison-falls.jpg',
+            'jinja-adventure-weekend': 'images/River-Nile-Source.jpg',
+            'gorillas-and-lakes-explorer': 'images/lake-bunyonyi-uganda.jpg',
+            'western-uganda-grand-safari': 'images/safari-elizabeth-1.jpg',
+            'kidepo-valley-wilderness': 'images/kidepo1.jpeg'
+        };
+
+        let allPackages = [];
+        let selectedPackage = null;
 
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
@@ -170,6 +189,16 @@
 
         function toggleNav() {
             document.getElementById('mainNav').classList.toggle('open');
+        }
+
+        function clearBookingSessionStorage() {
+            localStorage.removeItem('currentBookingId');
+            localStorage.removeItem('currentBookingAmount');
+            localStorage.removeItem('currentPaymentMethod');
+            localStorage.removeItem('currentBookingReference');
+            localStorage.removeItem('currentBookingPackageTitle');
+            localStorage.removeItem('currentBookingSummaryLine');
+            localStorage.removeItem('currentBookingImage');
         }
 
         function setupAuthCta() {
@@ -190,10 +219,7 @@
                 event.preventDefault();
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('user');
-                localStorage.removeItem('currentBookingId');
-                localStorage.removeItem('currentBookingAmount');
-                localStorage.removeItem('currentPaymentMethod');
-                localStorage.removeItem('currentBookingReference');
+                clearBookingSessionStorage();
                 window.location.href = 'index.html';
             });
             document.getElementById('mainNav').appendChild(logoutLink);
@@ -202,23 +228,154 @@
         function prefillUserDetails() {
             const userRaw = localStorage.getItem('user');
             if (!userRaw) return;
-
             try {
                 const user = JSON.parse(userRaw);
-                const [firstNameInput, lastNameInput, emailInput, phoneInput] =
-                document.querySelectorAll('#bookingForm input');
-                if (!firstNameInput || !lastNameInput || !emailInput || !phoneInput) return;
-
                 if (user.fullName) {
-                    const parts = user.fullName.trim().split(' ');
-                    firstNameInput.value = parts.shift() || '';
-                    lastNameInput.value = parts.join(' ');
+                    const parts = user.fullName.trim().split(/\s+/);
+                    document.getElementById('bfFirstName').value = parts.shift() || '';
+                    document.getElementById('bfLastName').value = parts.join(' ') || '';
                 }
-                if (user.email) emailInput.value = user.email;
-                if (user.phone) phoneInput.value = user.phone;
-            } catch (error) {
-                // Ignore invalid local data and keep empty form.
+                if (user.email) document.getElementById('bfEmail').value = user.email;
+                if (user.phone) document.getElementById('bfPhone').value = user.phone;
+            } catch (_) {
+                /* ignore */
             }
+        }
+
+        function pkgImage(pkg) {
+            if (!pkg) return 'images/bwindi1.jpg';
+            return packageImages[pkg.slug] || 'images/bwindi1.jpg';
+        }
+
+        function computeTotals() {
+            if (!selectedPackage) return { subtotal: 0, adultPart: 0, childPart: 0 };
+            const base = Number(selectedPackage.basePrice);
+            const adults = Math.max(1, parseInt(document.getElementById('bfAdults').value, 10) || 1);
+            const children = Math.max(0, parseInt(document.getElementById('bfChildren').value, 10) || 0);
+            const adultPart = base * adults;
+            const childPart = base * 0.5 * children;
+            const subtotal = adultPart + childPart;
+            return { subtotal, adultPart, childPart, adults, children, base };
+        }
+
+        function refreshSummary() {
+            const imgEl = document.getElementById('summaryImage');
+            const titleEl = document.getElementById('summaryTitle');
+            const metaEl = document.getElementById('summaryMeta');
+            const lineAdultsLabel = document.getElementById('lineAdultsLabel');
+            const lineAdults = document.getElementById('lineAdults');
+            const lineChildrenRow = document.getElementById('lineChildrenRow');
+            const lineChildren = document.getElementById('lineChildren');
+            const lineTotal = document.getElementById('lineTotal');
+
+            if (!selectedPackage) {
+                titleEl.textContent = 'Select a package';
+                metaEl.textContent = 'Choose from the list or open this page from Packages.';
+                lineAdults.textContent = '—';
+                lineChildrenRow.style.display = 'none';
+                lineTotal.textContent = '—';
+                return;
+            }
+
+            imgEl.src = pkgImage(selectedPackage);
+            imgEl.alt = selectedPackage.title;
+            titleEl.textContent = selectedPackage.title;
+            const destName = selectedPackage.destination?.name || '';
+            metaEl.textContent = `${selectedPackage.durationDays} days${destName ? ' · ' + destName : ''}`;
+
+            const { subtotal, adultPart, childPart, adults, children, base } = computeTotals();
+            lineAdultsLabel.textContent = `Adults (${adults} × $${base.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })})`;
+            lineAdults.textContent = `$${adultPart.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            if (children > 0) {
+                lineChildrenRow.style.display = 'flex';
+                lineChildren.textContent = `$${childPart.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            } else {
+                lineChildrenRow.style.display = 'none';
+            }
+            lineTotal.textContent = `$${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        function setSelectedPackage(pkg) {
+            selectedPackage = pkg;
+            refreshSummary();
+        }
+
+        function buildPackageSelect(filterDestinationId) {
+            const row = document.getElementById('packageRow');
+            const sel = document.getElementById('packageSelect');
+            const hint = document.getElementById('packageLockedHint');
+            let list = allPackages;
+            if (filterDestinationId) {
+                list = allPackages.filter((p) => p.destinationId === filterDestinationId);
+                if (!list.length) list = allPackages;
+            }
+            sel.innerHTML = list.map((p) =>
+                `<option value="${p.id}">${p.title} — $${Number(p.basePrice).toLocaleString()} pp</option>`
+            ).join('');
+            row.style.display = '';
+            hint.style.display = 'none';
+            sel.onchange = () => {
+                const id = Number(sel.value);
+                setSelectedPackage(allPackages.find((p) => p.id === id) || null);
+            };
+            return list;
+        }
+
+        async function initPackages() {
+            const params = new URLSearchParams(window.location.search);
+            const packageId = params.get('packageId') ? Number(params.get('packageId')) : null;
+            const packageSlug = params.get('packageSlug') ? String(params.get('packageSlug')).trim() : null;
+            const destinationId = params.get('destinationId') ? Number(params.get('destinationId')) : null;
+
+            const travelInput = document.getElementById('bfTravelDate');
+            const today = new Date();
+            travelInput.min = today.toISOString().slice(0, 10);
+
+            try {
+                const response = await fetch(`${window.API_BASE}/packages`);
+                const data = await response.json();
+                if (!response.ok || !data.packages || !data.packages.length) {
+                    showToast('Could not load packages. Check your connection or try again later.', 'error');
+                    return;
+                }
+                allPackages = data.packages;
+            } catch (e) {
+                showToast('Could not load packages.', 'error');
+                return;
+            }
+
+            let initial = null;
+            if (packageId) initial = allPackages.find((p) => p.id === packageId);
+            if (!initial && packageSlug) initial = allPackages.find((p) => p.slug === packageSlug);
+            if ((packageId || packageSlug) && !initial) {
+                showToast('That package link is outdated or invalid. Choose a package below.', 'info');
+            }
+
+            const row = document.getElementById('packageRow');
+            const hint = document.getElementById('packageLockedHint');
+
+            if (initial) {
+                row.style.display = 'none';
+                hint.style.display = '';
+                hint.textContent = 'Package selected from your link. Pick another from Packages if you need to change it.';
+                setSelectedPackage(initial);
+            } else if (destinationId) {
+                const filtered = buildPackageSelect(destinationId);
+                const match = filtered.find((p) => p.destinationId === destinationId) || filtered[0];
+                if (match) {
+                    document.getElementById('packageSelect').value = String(match.id);
+                    setSelectedPackage(allPackages.find((p) => p.id === match.id));
+                }
+            } else {
+                buildPackageSelect(null);
+                const first = allPackages[0];
+                document.getElementById('packageSelect').value = String(first.id);
+                setSelectedPackage(first);
+            }
+
+            ['bfAdults', 'bfChildren'].forEach((id) => {
+                document.getElementById(id).addEventListener('input', refreshSummary);
+            });
         }
 
         async function proceedToPayment(e) {
@@ -226,29 +383,48 @@
 
             const token = localStorage.getItem('authToken');
             if (!token) {
-                showToast('Please login first.', 'error');
+                sessionStorage.setItem('bookingResumeUrl', window.location.href);
+                showToast('Please log in to complete your booking.', 'error');
                 window.location.href = 'login.html';
                 return;
             }
 
-            const form = document.getElementById('bookingForm');
-            const formFields = form.querySelectorAll('input, textarea');
-            const selectedPayment = document.querySelector('input[name="payment"]:checked');
+            if (!selectedPackage) {
+                showToast('Please select a package.', 'error');
+                return;
+            }
 
+            const selectedPayment = document.querySelector('input[name="payment"]:checked');
             if (!selectedPayment) {
                 showToast('Please choose a payment method.', 'error');
                 return;
             }
 
+            const travelDate = document.getElementById('bfTravelDate').value;
+            if (!travelDate) {
+                showToast('Please choose your travel start date.', 'error');
+                return;
+            }
+
+            const { subtotal, adults, children } = computeTotals();
+            const totalAmount = Number(subtotal.toFixed(2));
+
             const payload = {
-                firstName: formFields[0].value.trim(),
-                lastName: formFields[1].value.trim(),
-                email: formFields[2].value.trim(),
-                phone: formFields[3].value.trim(),
-                nationality: formFields[4].value.trim(),
-                specialRequests: formFields[5].value.trim(),
+                firstName: document.getElementById('bfFirstName').value.trim(),
+                lastName: document.getElementById('bfLastName').value.trim(),
+                email: document.getElementById('bfEmail').value.trim(),
+                phone: document.getElementById('bfPhone').value.trim(),
+                nationality: document.getElementById('bfNationality').value.trim(),
+                specialRequests: document.getElementById('bfSpecial').value.trim(),
                 paymentMethod: selectedPayment.value,
-                totalAmount: BOOKING_TOTAL
+                totalAmount,
+                subtotalAmount: totalAmount,
+                tourPackageId: selectedPackage.id,
+                destinationId: selectedPackage.destinationId || null,
+                travelDate,
+                adults,
+                children,
+                currency: selectedPackage.currency || 'USD'
             };
 
             try {
@@ -266,11 +442,18 @@
                     throw new Error(data.message || 'Could not create booking.');
                 }
 
+                const ref = data.booking.reference || data.booking.bookingReference || '';
                 localStorage.setItem('currentBookingId', String(data.booking.id));
-                localStorage.setItem('currentBookingAmount', String(BOOKING_TOTAL));
+                localStorage.setItem('currentBookingAmount', String(totalAmount));
                 localStorage.setItem('currentPaymentMethod', selectedPayment.value);
-                localStorage.setItem('currentBookingReference', data.booking.reference || data.booking.bookingReference || '');
-                showToast('Booking created. Proceeding to payment...', 'success');
+                localStorage.setItem('currentBookingReference', ref);
+                localStorage.setItem('currentBookingPackageTitle', selectedPackage.title);
+                localStorage.setItem('currentBookingImage', pkgImage(selectedPackage));
+                const metaBits = [`${selectedPackage.durationDays} days`, `${adults} adult(s)`, travelDate];
+                if (children) metaBits.splice(2, 0, `${children} child(ren)`);
+                localStorage.setItem('currentBookingSummaryLine', metaBits.join(' · '));
+
+                showToast('Booking created. Continue to payment…', 'success');
                 setTimeout(() => {
                     window.location.href = 'payment.html';
                 }, 450);
@@ -287,8 +470,10 @@
             el.style.borderColor = 'var(--forest)';
             el.style.background = 'rgba(26,51,41,0.05)';
         }
+
         setupAuthCta();
         prefillUserDetails();
+        initPackages();
     </script>
 </body>
 

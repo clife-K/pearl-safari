@@ -36,14 +36,14 @@
   <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-content">
-      <div class="hero-badge"><i class="fas fa-star"></i> Rated #1 Safari Operator in Uganda</div>
+      <div class="hero-badge"><i class="fas fa-compass"></i> Kampala-based · Licensed safari operator</div>
       <h1>Discover the <em>Pearl of Africa</em> — Uganda</h1>
       <p>Gorilla trekking, Nile adventures, and breathtaking wildlife. We handle everything — transport, accommodation, permits.</p>
 
       <div class="hero-search">
         <i class="fas fa-search" style="color:rgba(255,255,255,0.5); font-size:0.9rem; flex-shrink:0;"></i>
         <input type="text" placeholder="Where do you want to go? (e.g., Bwindi, Jinja…)" id="heroSearch">
-        <a href="destinations.html" class="btn btn-sm">Explore</a>
+        <a href="destinations.html" class="btn btn-sm" id="heroExploreBtn">Explore</a>
       </div>
 
       <div class="hero-actions">
@@ -52,10 +52,10 @@
       </div>
 
       <div class="hero-stats">
-        <div class="hero-stat"><span class="num">1,200+</span><span class="label">Happy Travelers</span></div>
-        <div class="hero-stat"><span class="num">25+</span><span class="label">Destinations</span></div>
-        <div class="hero-stat"><span class="num">4.9★</span><span class="label">Google Rating</span></div>
-        <div class="hero-stat"><span class="num">10+</span><span class="label">Years Experience</span></div>
+        <div class="hero-stat"><span class="num">Gorillas</span><span class="label">Treks &amp; permits</span></div>
+        <div class="hero-stat"><span class="num">Wildlife</span><span class="label">Big game safaris</span></div>
+        <div class="hero-stat"><span class="num">Nile</span><span class="label">Rafting &amp; adventures</span></div>
+        <div class="hero-stat"><span class="num">Custom</span><span class="label">Private itineraries</span></div>
       </div>
     </div>
   </div>
@@ -82,13 +82,13 @@
       </div>
       <div class="feature-item">
         <div class="feature-icon"><i class="fas fa-tag"></i></div>
-        <h4>Best Price Guarantee</h4>
-        <p>No hidden fees ever</p>
+        <h4>Clear quotes</h4>
+        <p>Itemised pricing</p>
       </div>
       <div class="feature-item">
         <div class="feature-icon"><i class="fas fa-leaf"></i></div>
-        <h4>Eco-Friendly</h4>
-        <p>Carbon-neutral tours</p>
+        <h4>Responsible travel</h4>
+        <p>Leave-no-trace ethos</p>
       </div>
     </div>
   </div>
@@ -163,34 +163,31 @@
 <section class="section" style="background: var(--cream-dark); padding: 4rem 0;">
   <div class="container">
     <div class="section-header">
-      <span class="section-label">Limited Time</span>
-      <h2>Special Offers</h2>
-      <p>Book now and save on our most loved Uganda safari packages.</p>
+      <span class="section-label">Featured</span>
+      <h2>Popular packages</h2>
+      <p>Featured itineraries from our published packages — pricing follows what you see at checkout.</p>
     </div>
     <div class="offers-grid">
       <div class="offer-card">
-        <div class="discount-badge">Save 15%</div>
-        <h3>5-Day Gorilla & Wildlife Safari</h3>
-        <p>Bwindi Impenetrable Forest + Queen Elizabeth NP. Gorilla trekking, tree-climbing lions, Kazinga channel cruise.</p>
-        <div class="offer-was">Was $1,700</div>
-        <div class="offer-price">$1,450 <small style="font-size:0.75rem; color:rgba(255,255,255,0.6);">per person</small></div>
-        <a href="booking.html" class="btn btn-white mt-1">Book This Deal</a>
+        <div class="discount-badge">Gorillas &amp; Lakes</div>
+        <h3>Gorillas &amp; Lakes Explorer</h3>
+        <p>Bwindi gorilla trekking plus relaxation on Lake Bunyonyi — five days with permits, guides, and lodging arranged.</p>
+        <div class="offer-price">From $1,100 <small style="font-size:0.75rem; color:rgba(255,255,255,0.6);">per person</small></div>
+        <a href="booking.html?packageSlug=gorillas-and-lakes-explorer" class="btn btn-white mt-1">Book this package</a>
       </div>
       <div class="offer-card">
-        <div class="discount-badge" style="background: var(--forest-light); color: white;">Flash Sale</div>
-        <h3>3-Day Jinja Adventure</h3>
-        <p>Rafting + Source of the Nile boat ride + Ssezibwa Falls waterfall hike. All inclusive, fully guided.</p>
-        <div class="offer-was">Was $320</div>
-        <div class="offer-price">$280 <small style="font-size:0.75rem; color:rgba(255,255,255,0.6);">all inclusive</small></div>
-        <a href="booking.html" class="btn btn-white mt-1">Book This Deal</a>
+        <div class="discount-badge" style="background: var(--forest-light); color: white;">Nile</div>
+        <h3>Jinja Adventure Weekend</h3>
+        <p>White-water rafting, Nile source boat cruise, and adventure activities near Jinja — ideal for a short break.</p>
+        <div class="offer-price">From $280 <small style="font-size:0.75rem; color:rgba(255,255,255,0.6);">per person</small></div>
+        <a href="booking.html?packageSlug=jinja-adventure-weekend" class="btn btn-white mt-1">Book this package</a>
       </div>
       <div class="offer-card">
-        <div class="discount-badge">Honeymoon</div>
-        <h3>7-Night Romantic Lake Safari</h3>
-        <p>Lake Bunyonyi private island + Bwindi gorillas + Luxury lodge upgrade. Perfect for couples.</p>
-        <div class="offer-was">Was $2,200</div>
-        <div class="offer-price">$1,850 <small style="font-size:0.75rem; color:rgba(255,255,255,0.6);">per couple</small></div>
-        <a href="booking.html" class="btn btn-white mt-1">Book This Deal</a>
+        <div class="discount-badge">Western circuit</div>
+        <h3>Western Uganda Grand Safari</h3>
+        <p>Six-day western circuit with primates, big game, and boat cruises — our comprehensive lodge-based safari.</p>
+        <div class="offer-price">From $1,550 <small style="font-size:0.75rem; color:rgba(255,255,255,0.6);">per person</small></div>
+        <a href="booking.html?packageSlug=western-uganda-grand-safari" class="btn btn-white mt-1">Book this package</a>
       </div>
     </div>
   </div>
@@ -232,10 +229,10 @@
         <div class="logo"><i class="fas fa-paw"></i><div>Pearl Safari<span style="color:rgba(255,255,255,0.6)">Uganda</span></div></div>
         <p>Your trusted local tour operator specialising in gorilla trekking, wildlife safaris, and authentic Ugandan cultural experiences since 2015.</p>
         <div class="footer-social">
-          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+          <a href="contact.html" class="social-btn" title="Contact us"><i class="fab fa-facebook-f"></i></a>
+          <a href="contact.html" class="social-btn" title="Contact us"><i class="fab fa-instagram"></i></a>
+          <a href="contact.html" class="social-btn" title="Contact us"><i class="fab fa-twitter"></i></a>
+          <a href="https://wa.me/256712345678" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -252,8 +249,8 @@
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="#">Sustainability</a></li>
-          <li><a href="#">FAQs</a></li>
+          <li><a href="contact.html">Trip planning help</a></li>
+          <li><a href="packages.html">All packages</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -267,8 +264,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Pearl Safari Uganda. All rights reserved.</p>
-      <p><a href="#" style="color:rgba(255,255,255,0.5)">Privacy Policy</a> · <a href="#" style="color:rgba(255,255,255,0.5)">Terms</a></p>
+      <p>© 2026 Pearl Safari Uganda. All rights reserved.</p>
+      <p><a href="contact.html" style="color:rgba(255,255,255,0.5)">Contact</a> · <a href="packages.html" style="color:rgba(255,255,255,0.5)">Packages</a></p>
     </div>
   </div>
 </footer>
@@ -297,6 +294,9 @@
       localStorage.removeItem('currentBookingAmount');
       localStorage.removeItem('currentPaymentMethod');
       localStorage.removeItem('currentBookingReference');
+      localStorage.removeItem('currentBookingPackageTitle');
+      localStorage.removeItem('currentBookingSummaryLine');
+      localStorage.removeItem('currentBookingImage');
       window.location.href = 'index.html';
     });
     document.getElementById('mainNav').appendChild(logoutLink);
@@ -305,9 +305,20 @@
   function toggleNav() {
     document.getElementById('mainNav').classList.toggle('open');
   }
-  // Hero search → redirect
-  document.getElementById('heroSearch').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') window.location.href = 'destinations.html';
+  function heroDestinationUrl() {
+    var input = document.getElementById('heroSearch');
+    var q = input && input.value.trim();
+    return q ? ('destinations.html?q=' + encodeURIComponent(q)) : 'destinations.html';
+  }
+  document.getElementById('heroExploreBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.location.href = heroDestinationUrl();
+  });
+  document.getElementById('heroSearch').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      window.location.href = heroDestinationUrl();
+    }
   });
   setupAuthCta();
 </script>

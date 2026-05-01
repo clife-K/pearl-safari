@@ -269,6 +269,9 @@
                 localStorage.removeItem('currentBookingAmount');
                 localStorage.removeItem('currentPaymentMethod');
                 localStorage.removeItem('currentBookingReference');
+                localStorage.removeItem('currentBookingPackageTitle');
+                localStorage.removeItem('currentBookingSummaryLine');
+                localStorage.removeItem('currentBookingImage');
                 window.location.href = 'index.html';
             });
             document.getElementById('mainNav').appendChild(logoutLink);
@@ -299,7 +302,7 @@
           <div class="card-desc">${destination.description || 'Explore this amazing destination with our guided safari team.'}</div>
           <div class="card-footer">
             <div class="price">Top destination</div>
-            <a href="booking.html" class="btn btn-sm">Book Now</a>
+            <a href="booking.html?destinationId=${destination.id}" class="btn btn-sm">Book Now</a>
           </div>
         </div>
       </div>
@@ -312,7 +315,17 @@
                 const response = await fetch(`${window.API_BASE}/destinations`);
                 const data = await response.json();
                 if (!response.ok || !data.destinations) return;
-                renderDestinations(data.destinations);
+                let list = data.destinations;
+                const q = new URLSearchParams(window.location.search).get('q');
+                if (q && q.trim()) {
+                    const lower = q.trim().toLowerCase();
+                    list = list.filter((d) =>
+                        (d.name && d.name.toLowerCase().includes(lower)) ||
+                        (d.region && d.region.toLowerCase().includes(lower)) ||
+                        (d.description && d.description.toLowerCase().includes(lower))
+                    );
+                }
+                renderDestinations(list);
             } catch (error) {
                 // Keep static fallback content if API is unavailable.
             }

@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const fs = require("fs");
 const path = require("path");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
@@ -12,26 +13,39 @@ dotenv.config();
 
 const { resolveDatabaseUrl } = require("./resolve-database-url.cjs");
 const databaseUrl = resolveDatabaseUrl();
-if (!databaseUrl) {
+const staticOnlyMode = !databaseUrl && process.env.STATIC_ONLY === "1";
+
+if (!databaseUrl && !staticOnlyMode) {
     console.error(
-        "[Startup] DATABASE_URL is missing on this service. In Railway: open your Postgres plugin → Variables → copy DATABASE_URL, or use “Reference variable” from Postgres → DATABASE_URL on your web service.",
+        "[Startup] DATABASE_URL is missing. Add it to .env or Railway variables.",
+        "\n          UI-only preview: set STATIC_ONLY=1 (no login, bookings, or admin until Postgres is wired).",
+        "\n          Railway: reference Postgres DATABASE_URL on your web service.",
     );
     process.exit(1);
 }
-process.env.DATABASE_URL = databaseUrl;
+
+if (databaseUrl) {
+    process.env.DATABASE_URL = databaseUrl;
+}
 
 const app = express();
 if (process.env.NODE_ENV === "production") {
     app.set("trust proxy", 1);
 }
 
-const pool = new Pool({ connectionString: databaseUrl });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+let pool = null;
+let prisma = null;
+if (!staticOnlyMode) {
+    pool = new Pool({ connectionString: databaseUrl });
+    const adapter = new PrismaPg(pool);
+    prisma = new PrismaClient({ adapter });
+}
 
 // ═══════════════ MIDDLEWARE ═══════════════
 // Supports one or many origins via FRONTEND_URL (comma-separated).
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:3000,http://localhost:5000,http://127.0.0.1:5000")
+const allowedOrigins = (process.env.FRONTEND_URL ||
+        "http://localhost:3000,http://localhost:5000,http://127.0.0.1:5000," +
+        "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5500,http://127.0.0.1:5500")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
@@ -44,22 +58,44 @@ if (railwayPublic) {
     }
 }
 
+const corsReflectAny = process.env.CORS_RELAXED === "1";
 app.use(cors({
-    origin: (origin, callback) => {
-        // Allow server-to-server requests and tools with no Origin header.
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) return callback(null, true);
-        return callback(new Error("CORS origin not allowed"));
-    },
-    credentials: true
+    origin: corsReflectAny
+        ? true
+        : (origin, callback) => {
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.includes(origin)) return callback(null, true);
+            return callback(null, false);
+        },
+    credentials: true,
 }));
 app.use(express.json());
 
 const FRONTEND_DIR = path.join(__dirname, "../frontend");
+if (!fs.existsSync(FRONTEND_DIR)) {
+    console.error(
+        "[Startup] Frontend folder not found at",
+        FRONTEND_DIR,
+        "— run the server from the backend folder with frontend/ next to backend/, or check your deploy COPY paths.",
+    );
+    process.exit(1);
+}
+const indexPath = path.join(FRONTEND_DIR, "index.html");
+if (!fs.existsSync(indexPath)) {
+    console.error("[Startup] Missing", indexPath, "— static site will not load.");
+    process.exit(1);
+}
 
-// Store prisma and JWT_SECRET in app.locals for admin routes
 app.locals.prisma = prisma;
+app.locals.staticOnly = staticOnlyMode;
 app.locals.JWT_SECRET = process.env.JWT_SECRET || "replace-me";
+
+if (staticOnlyMode) {
+    console.warn(
+        "[Startup] STATIC_ONLY mode — HTML/CSS loads; GET /api/packages and /api/destinations return empty lists;",
+        "\n          other API routes return 503 until DATABASE_URL is set.",
+    );
+}
 
 // ═══════════════ ROUTES SETUP ═══════════════
 // Import admin routes
@@ -81,6 +117,7 @@ app.get("/api/config", (req, res) => {
     return res.json({
         apiUrl: `${proto}://${host}/api`,
         environment: process.env.NODE_ENV || "development",
+        staticOnly: staticOnlyMode,
     });
 });
 
@@ -102,9 +139,17 @@ function authRequired(req, res, next) {
 }
 
 app.get("/api/health", async(req, res) => {
+    if (staticOnlyMode) {
+        return res.json({
+            ok: true,
+            database: false,
+            staticOnly: true,
+            message: "Serving frontend only; set DATABASE_URL for full API.",
+        });
+    }
     try {
         await prisma.$queryRaw `SELECT 1`;
-        return res.json({ ok: true, message: "Backend and database are running." });
+        return res.json({ ok: true, database: true, message: "Backend and database are running." });
     } catch (error) {
         return res.status(500).json({
             ok: false,
@@ -113,6 +158,22 @@ app.get("/api/health", async(req, res) => {
         });
     }
 });
+
+if (staticOnlyMode) {
+    app.get("/api/packages", (_req, res) => res.json({ packages: [] }));
+    app.get("/api/destinations", (_req, res) => res.json({ destinations: [] }));
+    app.use("/api", (req, res) => {
+        if (req.method === "OPTIONS") {
+            return res.sendStatus(204);
+        }
+        return res.status(503).json({
+            message: "Database not configured. Add DATABASE_URL and restart without STATIC_ONLY.",
+            staticOnly: true,
+        });
+    });
+}
+
+if (!staticOnlyMode) {
 
 app.post("/api/auth/signup", async(req, res) => {
     try {
@@ -277,25 +338,28 @@ app.post("/api/bookings/:bookingId/payments", authRequired, async(req, res) => {
             return res.status(404).json({ message: "Booking not found." });
         }
 
+        const rawRef = typeof transactionRef === "string" ? transactionRef.trim() : "";
+        const uniqueTransactionRef = rawRef
+            ? `${bookingId}-${Date.now()}-${rawRef.replace(/\s+/g, " ").slice(0, 72)}`
+            : null;
+
         const payment = await prisma.payment.create({
             data: {
                 bookingId,
                 amount: Number(amount),
                 method,
-                status: PaymentStatus.PAID,
+                status: PaymentStatus.PENDING,
                 currency: currency === CurrencyCode.UGX ? CurrencyCode.UGX : CurrencyCode.USD,
-                transactionRef: transactionRef || null,
+                transactionRef: uniqueTransactionRef,
                 reference: reference || `PAY-${Date.now()}`,
-                paidAt: new Date(),
+                paidAt: null,
             },
         });
 
-        await prisma.booking.update({
-            where: { id: bookingId },
-            data: { status: BookingStatus.CONFIRMED },
+        return res.status(201).json({
+            message: "Payment notice recorded. Our team will verify your payment and confirm the booking.",
+            payment,
         });
-
-        return res.status(201).json({ message: "Payment saved. Booking confirmed.", payment });
     } catch (error) {
         return res.status(500).json({ message: "Could not save payment.", error: error.message });
     }
@@ -358,16 +422,44 @@ app.post("/api/contacts", async(req, res) => {
 // ═══════════════ ADMIN ROUTES ═══════════════
 app.use("/api/admin", adminRoutes);
 
-// Static site (after /api routes) — index.html is served for /
+} // end !staticOnlyMode
+
+// Home page explicitly (reliable behind proxies / Express 5 static edge cases)
+app.get("/", (_req, res) => {
+    res.sendFile(indexPath);
+});
+
+// Static site (after /api routes)
 app.use(express.static(FRONTEND_DIR));
 
 app.use((req, res) => {
     if (req.path.startsWith("/api")) {
         return res.status(404).json({ message: "Route not found." });
     }
+    if (req.method !== "GET" && req.method !== "HEAD") {
+        return res.status(404).type("text").send("Not found");
+    }
+    // Clean URLs: /packages → packages.html (only one path segment, no dots — avoids /images/x.jpg → images.html)
+    const parts = req.path.replace(/^\//, "").split("/").filter(Boolean);
+    if (parts.length !== 1 || parts[0].includes("..") || parts[0].includes(".")) {
+        return res.status(404).type("text").send("Not found");
+    }
+    const htmlPath = path.join(FRONTEND_DIR, `${parts[0]}.html`);
+    const resolved = path.resolve(htmlPath);
+    const rootResolved = path.resolve(FRONTEND_DIR);
+    const underRoot =
+        resolved === rootResolved ||
+        resolved.toLowerCase().startsWith(rootResolved.toLowerCase() + path.sep);
+    if (!underRoot) {
+        return res.status(404).type("text").send("Not found");
+    }
+    if (fs.existsSync(htmlPath)) {
+        return res.sendFile(htmlPath);
+    }
     return res.status(404).type("text").send("Not found");
 });
 
-app.listen(PORT, () => {
-    console.log(`API running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server http://localhost:${PORT}`);
+    console.log(`Serving pages from ${FRONTEND_DIR}`);
 });

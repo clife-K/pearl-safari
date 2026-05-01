@@ -48,26 +48,11 @@
           <i class="fas fa-lock"></i>
           <input type="password" placeholder="Password" required>
         </div>
-        <div style="display:flex; justify-content:flex-end; margin-bottom:1.25rem;">
-          <a href="#" style="font-size:0.85rem; color:var(--text-soft);">Forgot password?</a>
-        </div>
+        <p style="font-size:0.82rem; color:var(--text-soft); text-align:center; margin-bottom:1.25rem;">Need help accessing your account? <a href="contact.html" style="color:var(--forest-light);">Contact us</a>.</p>
         <button type="submit" class="btn btn-block btn-lg btn-forest">
           <i class="fas fa-sign-in-alt"></i> Login
         </button>
       </form>
-
-      <div style="text-align:center; margin:1.5rem 0; position:relative;">
-        <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:var(--sand);"></div>
-        <span style="position:relative; background:var(--white); padding:0 1rem; font-size:0.85rem; color:var(--text-soft);">or continue with</span>
-      </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
-        <button onclick="showToast('Google login is demo-only for now.', 'info'); return false;" style="background:var(--cream); border:1.5px solid var(--sand); border-radius:var(--radius); padding:10px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.9rem; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px;">
-          <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="G"> Google
-        </button>
-        <button onclick="showToast('Facebook login is demo-only for now.', 'info'); return false;" style="background:#1877f2; border:none; border-radius:var(--radius); padding:10px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.9rem; cursor:pointer; color:white; display:flex; align-items:center; justify-content:center; gap:8px;">
-          <i class="fab fa-facebook-f"></i> Facebook
-        </button>
-      </div>
     </div>
 
     <!-- Signup Panel -->
@@ -89,7 +74,7 @@
           <i class="fas fa-lock"></i>
           <input type="password" placeholder="Create password (min 6 chars)" required minlength="6">
         </div>
-        <p style="font-size:0.82rem; color:var(--text-soft); margin-bottom:1.25rem; text-align:center;">By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+        <p style="font-size:0.82rem; color:var(--text-soft); margin-bottom:1.25rem; text-align:center;">By signing up, you agree we may contact you about your bookings and trips.</p>
         <button type="submit" class="btn btn-block btn-lg btn-forest">
           <i class="fas fa-user-plus"></i> Create Account
         </button>
@@ -141,7 +126,9 @@ async function handleLogin(e) {
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));
     showToast('Login successful. Redirecting...', 'success');
-    setTimeout(() => { window.location.href = 'booking.html'; }, 500);
+    const resume = sessionStorage.getItem('bookingResumeUrl');
+    sessionStorage.removeItem('bookingResumeUrl');
+    setTimeout(() => { window.location.href = resume || 'packages.html'; }, 500);
   } catch (error) {
     showToast(error.message || 'Could not login. Please try again.', 'error');
   }
@@ -170,7 +157,9 @@ async function handleSignup(e) {
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));
     showToast('Account created successfully. Redirecting...', 'success');
-    setTimeout(() => { window.location.href = 'booking.html'; }, 500);
+    const resume = sessionStorage.getItem('bookingResumeUrl');
+    sessionStorage.removeItem('bookingResumeUrl');
+    setTimeout(() => { window.location.href = resume || 'packages.html'; }, 500);
   } catch (error) {
     showToast(error.message || 'Could not create account. Please try again.', 'error');
   }

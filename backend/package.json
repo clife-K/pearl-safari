@@ -7,7 +7,9 @@
         "postinstall": "prisma generate",
         "db:generate": "prisma generate",
         "dev": "nodemon server.js",
-        "start": "prisma migrate deploy && node server.js",
+        "start": "node scripts/start.js",
+        "start:static": "node scripts/start-static.js",
+        "start:app": "node server.js",
         "migrate": "prisma migrate deploy",
         "seed": "node prisma/seed.js",
         "test": "echo \"Error: no test specified\" && exit 1"

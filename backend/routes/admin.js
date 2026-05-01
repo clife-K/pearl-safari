@@ -264,6 +264,13 @@ router.put("/payments/:paymentId/status", adminRequired, async (req, res) => {
             data: { status, paidAt: status === "PAID" ? new Date() : null }
         });
 
+        if (status === "PAID") {
+            await prisma.booking.update({
+                where: { id: payment.bookingId },
+                data: { status: BookingStatus.CONFIRMED },
+            });
+        }
+
         return res.json({ message: "Payment status updated.", payment });
     } catch (error) {
         return res.status(500).json({ message: "Status update failed.", error: error.message });

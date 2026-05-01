@@ -83,6 +83,9 @@ function setupAuthCta() {
     localStorage.removeItem('currentBookingAmount');
     localStorage.removeItem('currentPaymentMethod');
     localStorage.removeItem('currentBookingReference');
+    localStorage.removeItem('currentBookingPackageTitle');
+    localStorage.removeItem('currentBookingSummaryLine');
+    localStorage.removeItem('currentBookingImage');
     window.location.href = 'index.html';
   });
   document.getElementById('mainNav').appendChild(logoutLink);
@@ -96,8 +99,12 @@ function bookingStatusColor(status) {
 }
 
 function paymentStatusText(payments) {
-  if (!payments || !payments.length) return 'No payment yet';
-  return payments[0].status;
+  if (!payments || !payments.length) return 'No payment submitted yet';
+  const sorted = [...payments].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const p = sorted[0];
+  if (p.status === 'PENDING') return 'Payment verification pending';
+  if (p.status === 'PAID') return 'Payment verified';
+  return p.status;
 }
 
 function renderBookings(bookings) {
