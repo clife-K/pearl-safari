@@ -1,0 +1,5 @@
+Placeholder photos were bundled so the site works after clone/deploy.
+Sources: https://picsum.photos (free to use images).
+
+Replace these files with your own safari photos anytime; keep the same filenames
+so you do not need to edit HTML/CSS.
