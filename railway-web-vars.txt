@@ -1,5 +1,32 @@
-# Web / Docker APPLICATION service ONLY (never paste into Postgres service).
-# Use Variables → Raw Editor. If Postgres tile is NOT named "Postgres", type ${{ then pick DATABASE_URL from autocomplete (service name differs).
+# ════════════════════════════════════════════════════════════════════
+# RAILWAY — ONLY paste into your WEB / Docker / Node APPLICATION service
+# (the service that builds from THIS repo). NEVER only into Postgres.
+# ════════════════════════════════════════════════════════════════════
+#
+# After saving variables you MUST click Deploy / apply staged changes.
+#
+# METHOD A — References (best): Web service → Variables → "+ New Variable"
+#   Name:  DATABASE_URL
+#   Value: click "Variable Reference" (or type ${{ and use the picker)
+#          → choose YOUR Postgres/database tile → variable DATABASE_URL
+#   The Postgres tile might NOT be named "Postgres" — use the picker names only.
+#
+# METHOD B — Raw Editor: paste the lines below AFTER fixing the DATABASE_URL line
+#   so "${{ ... }}" matches YOUR database service name from the picker.
+#
+# METHOD C — Manual: Postgres service → Variables → reveal DATABASE_URL → copy.
+#   Web service → Variables → DATABASE_URL = paste the full connection string.
+#
+# ─── Paste below into Raw Editor (edit DATABASE_URL line via METHOD A if unsure) ───
+
 DATABASE_URL=${{ Postgres.DATABASE_URL }}
 NODE_ENV=production
 JWT_SECRET=REPLACE_WITH_AT_LEAST_40_RANDOM_CHARACTERS
+
+# Optional — helps CORS (use your real public Railway HTTPS URL):
+# FRONTEND_URL=https://YOUR-GENERATED-DOMAIN.up.railway.app
+
+# ─── Railway CLI alternative (install CLI, login, link project, then): ───
+# railway variables --service "<YOUR_WEB_SERVICE_NAME>" \
+#   --set "DATABASE_URL=\${{ Postgres.DATABASE_URL }}"
+# (Use your actual Postgres service slug from `railway service list` if not Postgres.)
